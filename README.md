@@ -14,56 +14,58 @@ An unassuming Neovim distribution used by Flipstone and friends
 ## Mappings
 
     " Open NERDTree (file browser)
-    <Space>t    * :NERDTreeToggle<CR>
+    <Space>t
 
     " CTRLP Fuzzy Finder (for opening files and buffers)
-    <Space>a    * :CtrlP<CR>
-    <Space>bb   * :CtrlPBuffer<CR>
+    <Space>a
+
+    " CTRLP Fuzzy Finder (starting in buffer mode)
+    <Space>bb
 
     " Save current file
-    <Space>fs   * :write<CR>
+    <Space>fs
 
     " Save all changed files
-    <Space>fS   * :wall<CR>
+    <Space>fS
 
     " Split window with a horizontal bar
-    <Space>w-   * :split<CR>
+    <Space>w-
 
     " Split window with a vertical bar
-    <Space>w/   * :vsplit<CR>
+    <Space>w/
 
     " Move cursor amongst windows (followed by w,h,j,k,l for next,left,down,up,right)
-    <Space>w   * <C-W>
+    <Space>w
 
     " Search in the current directory
-    <Space>sa   * :Ack!<Space>
+    <Space>sa
 
     " Search for word under the cursor in current directory
-    <Space>sw   * :Ack! -w '<cword>'<CR>
+    <Space>sw
 
     " Move to previous/next item in the quickfix list
-    <Space>p    * :cprevious<CR>
-    <Space>n    * :cnext<CR>
+    <Space>p
+    <Space>n
 
     " Open quickfix list for going global replace
-    <Space>cr   * :execute ':Gqfopen' | cclose<CR>
+    <Space>cr
 
     " Sort the quickfix list
-    <Space>cs   * :SortQuickfixList<CR>
+    <Space>cs
 
     " Open / close the quickfix list
-    <Space>co   * :copen<CR>
-    <Space>cc   * :cclose<CR>
+    <Space>co
+    <Space>cc
 
     " Switch between current and last file open in this window
-    <Space><Tab> * :buffer #<CR>
+    <Space><Tab>
 
     " Open Magit for Staging Git commits
-    <Space>gs   * :Magit<CR>
+    <Space>gs
 
     " Git blame the current file
-    <Space>gb   * :GitBlame<CR>
+    <Space>gb
 
     " Git log the current file (or directory)
-    <Space>gl   * :GitLog<CR>
+    <Space>gl
 
