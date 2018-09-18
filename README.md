@@ -11,6 +11,10 @@ An unassuming Neovim distribution used by Flipstone and friends
 * Run `nvim`
 * Inside `nvim`, run `:PlugInstall`, then run `:SourceInitFile`
 
+## Learning the ropes
+
+If you're not comfortable with basic vim mappings, you can run `:Tutor` inside `nvim` to start learning!
+
 ## Mappings
 
     " Open NERDTree (file browser)
