@@ -16,46 +16,32 @@ An unassuming Neovim distribution used by Flipstone and friends
     " Open NERDTree (file browser)
     <Space>t
 
-    " CTRLP Fuzzy Finder (for opening files and buffers)
-    <Space>a
+    " CtrlP Fuzzy Finder
+    <Space>a   " Open CtrlP in file mode
+    <Space>bb  " Open CtrlP in buffer mode
 
-    " CTRLP Fuzzy Finder (starting in buffer mode)
-    <Space>bb
+    " Saving
+    <Space>fs  " Save current file
+    <Space>fS  " Save all changed files
 
-    " Save current file
-    <Space>fs
+    " Window commands
+    <Space>ww  " Cursor to next window
+    <Space>wh  " Cursor to window to left
+    <Space>wj  " Cursor to window below
+    <Space>wk  " Cursor to window above
+    <Space>wl  " Cursor to Window to right
+    <Space>w-  " Split window with horizontal bar
+    <Space>w/  " Split window with a vertical bar
+    <Space>wc  " Close current window
 
-    " Save all changed files
-    <Space>fS
-
-    " Split window with a horizontal bar
-    <Space>w-
-
-    " Split window with a vertical bar
-    <Space>w/
-
-    " Move cursor amongst windows (followed by w,h,j,k,l for next,left,down,up,right)
-    <Space>w
-
-    " Search in the current directory
-    <Space>sa
-
-    " Search for word under the cursor in current directory
-    <Space>sw
-
-    " Move to previous/next item in the quickfix list
-    <Space>p
-    <Space>n
-
-    " Open quickfix list for going global replace
-    <Space>cr
-
-    " Sort the quickfix list
-    <Space>cs
-
-    " Open / close the quickfix list
-    <Space>co
-    <Space>cc
+    " Searching and replacing
+    <Space>sa  " Search current directory
+    <Space>sw  " Search current directory for word under cursor
+    <Space>p   " Move to previous search result
+    <Space>n   " Move to next search result
+    <Space>cr  " Open search results for global replacement
+    <Space>cc  " Close search results
+    <Space>co  " Open previous closed search results
 
     " Switch between current and last file open in this window
     <Space><Tab>
