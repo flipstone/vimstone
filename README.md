@@ -9,5 +9,5 @@ An unassuming Neovim distribution used by Flipstone and friends
 
 * Clone the repo: `git clone git@github.com:flipstone/vimstone.git ~/.config/nvim`
 * Run `nvim`
-* Inside `nvim`, run `:PlugInstall`
+* Inside `nvim`, run `:PlugInstall`, then run `:SourceInitFile`
 
