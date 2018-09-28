@@ -11,6 +11,17 @@ An unassuming Neovim distribution used by Flipstone and friends
 * Run `nvim`
 * Inside `nvim`, run `:PlugInstall`, then run `:SourceInitFile`
 
+## Upgrading
+
+* Update the repo: `cd ~/.config/nvim && git pull`
+* Run `:SourceInitFile`
+* Run `:PlugUpgrade`
+
+Note: If the case of some plugins and settings, you may *also* need to quit
+neovim and start it again after running the above steps. Particular if any
+settings were *removed* in the update those settings will persist in your
+editor until a restart.
+
 ## Learning the ropes
 
 If you're not comfortable with basic vim mappings, you can run `:Tutor` inside `nvim` to start learning!
