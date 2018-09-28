@@ -17,7 +17,7 @@ Plug 'kien/ctrlp.vim', { 'commit': '564176f' }
 
 Plug 'neovimhaskell/haskell-vim', { 'commit': 'a5302e0' }
 
-Plug 'raichoo/purescript-vim', { 'commit': 'bd19ded' }
+Plug 'raichoo/purescript-vim', { 'commit': 'ab8547ce' }
 
 Plug 'fatih/vim-go', { 'commit': '8575d9e' }
 
@@ -177,6 +177,11 @@ elseif executable('ag')
   let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
   let g:ackprg='ag --smart-case --vimgrep'
 endif
+
+let purescript_indent_if = 2
+let purescript_indent_case = 2
+let purescript_indent_where = 2
+let purescript_indent_do = 2
 
 set number
 set shiftwidth=2
