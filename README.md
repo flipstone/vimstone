@@ -70,3 +70,46 @@ If you're not comfortable with basic vim mappings, you can run `:Tutor` inside `
     " Git log the current file (or directory)
     <Space>gl
 
+    " Intero Mappings for Haskell projects that have a
+    " ./stack script in their project directory
+    <Space>is  " start intero
+    <Space>ik  " kill intero
+    <Space>io  " open intero repl window (horizontal split)
+    <Space>iov " open intero repl window (vertical split)
+    <Space>ih  " hide intero window (without stopping intero)
+
+    <Space>il  " load the current module in intero
+    <Space>if  " load the current file in intero
+
+    <Space>it  " show the (generic) type of expression (at cursor, on visually higlighted)
+    <Space>iT  " show the (specifiic) type of expression
+    <Space>iit " insert type annotation
+
+    <Space>jd  " jump to definition
+
+    <Space>ist " set compilation targets
+
+## Using Intero with Haskell files
+
+Intero is not configured to start automatically when you open a Haskell
+file. To start intero you need to first make sure that your current
+directory is the project directory that contains an appropriate `./stack`
+script that can run intero for your project. You can use the `:cd` (or `:lcd`)
+command to change directory, then use `:InteroStart` (or the mapping above)
+to start the intero session.
+
+Once intero has started (which might take a while the first time on a
+project), saving a Haskell file will automatically reload it in intero
+and show errors.
+
+### Switching projects
+
+There can only be one intero session running in vim. If you want to switch
+to a different project, you'll need to kill intero (`:InteroKill`, or the
+mapping above) before starting a new session in the other project.
+
+Alternatively, you could use separate vim sessions per project if you want
+to simply avoid that issue.
+
+
+
