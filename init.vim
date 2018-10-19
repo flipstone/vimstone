@@ -9,6 +9,8 @@ call plug#begin('~/.local/share/nvim/plugged')
 
 Plug 'scrooloose/nerdtree', { 'commit': '6188c5e' }
 
+Plug 'neomake/neomake', { 'commit': '4cc1462' }
+
 Plug 'mileszs/ack.vim', { 'commit': '36e40f9' }
 
 Plug 'flazz/vim-colorschemes', { 'commit': 'eab3157' }
@@ -16,6 +18,8 @@ Plug 'flazz/vim-colorschemes', { 'commit': 'eab3157' }
 Plug 'kien/ctrlp.vim', { 'commit': '564176f' }
 
 Plug 'neovimhaskell/haskell-vim', { 'commit': 'a5302e0' }
+
+Plug 'parsonsmatt/intero-neovim', { 'commit': '9bb546e' }
 
 Plug 'raichoo/purescript-vim', { 'commit': 'ab8547ce' }
 
@@ -165,6 +169,74 @@ noremap <silent> <Leader>bb :CtrlPBuffer<CR>
 
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-o> <Esc>
+
+let g:intero_start_immediately = 0
+
+" Configure intero to use the stack script in the current directory
+" for running stack. Using `cd` (or `lcd`) allows each project to
+" then specify a project-specific way to run stack (e.g. to run
+" stack in a project-specific docker container)
+"
+let g:intero_backend = {
+        \ 'command':
+        \   join([
+        \     './stack',
+        \     'ghci',
+        \     '--with-ghc intero',
+        \     intero#util#stack_build_opts()]
+        \     , ' ')
+        \}
+
+" We don't necessarily *always* want intero to be running,
+" so this command lets us only reload the current file
+" if intero is currently running.
+"
+function! s:InteroReloadIfStarted()
+  if g:intero_started
+    InteroReload
+  endif
+endfunction
+
+command! InteroReloadIfStarted call s:Reload()
+
+" This mappings are only available in Haskell files, and only
+" if you have a `stack` script in the project root, where your
+" current directory in the project root.
+"
+augroup InteroMaps
+  au!
+  " Maps for intero. Restrict to Haskell buffers so the bindings don't collide.
+
+  " Background process and window management
+  au FileType haskell nnoremap <silent> <leader>is :InteroStart<CR>
+  au FileType haskell nnoremap <silent> <leader>ik :InteroKill<CR>
+
+  " Open intero/GHCi split horizontally
+  au FileType haskell nnoremap <silent> <leader>io :InteroOpen<CR>
+  " Open intero/GHCi split vertically
+  au FileType haskell nnoremap <silent> <leader>iov :InteroOpen<CR><C-W>H
+  au FileType haskell nnoremap <silent> <leader>ih :InteroHide<CR>
+
+  " Automatically reload on save (if Intero is started)
+  au BufWritePost *.hs InteroReloadIfStarted
+
+  " Load individual modules
+  au FileType haskell nnoremap <silent> <leader>il :InteroLoadCurrentModule<CR>
+  au FileType haskell nnoremap <silent> <leader>if :InteroLoadCurrentFile<CR>
+
+  " Type-related information
+  " Heads up! These next two differ from the rest.
+  au FileType haskell map <silent> <leader>it <Plug>InteroGenericType
+  au FileType haskell map <silent> <leader>iT <Plug>InteroType
+  au FileType haskell nnoremap <silent> <leader>iit :InteroTypeInsert<CR>
+
+  " Navigation
+  au FileType haskell nnoremap <silent> <leader>jd :InteroGoToDef<CR>
+
+  " Managing targets
+  " Prompts you to enter targets (no silent):
+  au FileType haskell nnoremap <leader>ist :InteroSetTargets<SPACE>
+augroup END
 
 let g:ctrlp_use_caching=0
 
