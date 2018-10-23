@@ -71,7 +71,7 @@ command! Reload call s:Reload()
 function! s:GitLog()
   let l:name=bufname('%')
   let l:type=getbufvar('%', '&buftype', 'ERROR')
-  let l:basecmd="PAGER= git log --graph"
+  let l:basecmd="git --no-pager log --graph"
 
   if l:type == "" && glob(l:name) != ""
     let l:cmd=l:basecmd." ".l:name
@@ -94,7 +94,7 @@ command! -nargs=0 GitLog call s:GitLog()
 "
 function! s:GitBlame()
   let l:name=bufname('%')
-  let l:cmd="PAGER= git blame ".l:name
+  let l:cmd="git --no-pager blame ".l:name
   split
   resize
   execute "terminal ".l:cmd
