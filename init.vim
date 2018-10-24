@@ -197,7 +197,7 @@ function! s:InteroReloadIfStarted()
   endif
 endfunction
 
-command! InteroReloadIfStarted call s:Reload()
+command! InteroReloadIfStarted call s:InteroReloadIfStarted()
 
 " This mappings are only available in Haskell files, and only
 " if you have a `stack` script in the project root, where your
