@@ -1,0 +1,22 @@
+# Upgrading Vimstone
+
+To upgrade Vimstone you need to get the latest from github and then reload
+the configurations. If you used the recommended installation method, you
+can get the latest by running:
+
+~~~ sh
+  $ cd ~/.config/nvim && git pull
+~~~
+
+Then run:
+
+~~~ cmd
+  :SourceInitFile
+  :PlugUpdate
+~~~
+
+Note: If the case of some plugins and settings, you may *also* need to
+quit neovim and start it again after running the above steps. Particularly
+if any settings were *removed* in the update those settings will persist
+in your editor until a restart.
+

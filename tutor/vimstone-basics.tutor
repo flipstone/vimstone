@@ -1,0 +1,48 @@
+# Vimstone Basics
+
+The most effective way to use this tutorial is to use vim in the directory of
+an actual project you are working on. If you're already here, but not in the
+directory of an approriate project, you can move directories from within vim
+very easily using the `:cd`{normal} command.
+
+~~~ normal
+:cd <some-project-directory>
+~~~
+
+Note: `:cd`{normal} Changes the current working directory for the entire vim
+session. If you want to change the directory for just the current window (and
+any windows spawned from it), you can use `:lcd`{normal} instead.
+
+## Using the NERDTree project tree
+
+Press
+
+~~~ normal
+<Space>t
+~~~
+
+to open a window on the left with the
+[NERDTree](https://github.com/scrooloose/nerdtree) plugin in it.
+
+Navigate vertically the project tree using either `j`{normal} and `k`{normal}
+or the arrow keys. You can open the item on the current line using `o`{normal}. For
+a directory it will expand or collapse the item. For a file it will open it in the
+last window your cursor was in before you moved to project tree.
+
+## Fuzzy-finding a file via CtrlP
+
+Press
+
+~~~ normal
+<Space>a
+~~~
+
+to invoke the [ctrlp.vim](https://github.com/ctrlpvim/ctrlp.vim) plugin and
+start fuzzy-finding a file. Once ctrlp is open, you can type a sequence of
+character to quickly filter through files in the project to find the one
+you want to open. Files containing all the characters in the order given
+will be displayed, even if there are extra characters between them.
+
+You can use the arrow keys to select from the filtered menu of files, and
+then use `<Enter>`{normal} to open a file.
+
