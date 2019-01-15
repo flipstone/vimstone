@@ -238,6 +238,10 @@ augroup InteroMaps
   au FileType haskell nnoremap <leader>ist :InteroSetTargets<SPACE>
 augroup END
 
+" Temporary workaround for tutor links not working when
+" debug is not on. We need to find a better solution though ;(
+let g:tutor_debug=1
+
 let g:ctrlp_use_caching=0
 
 if executable('rg')
