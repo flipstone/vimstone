@@ -1,0 +1,16 @@
+# Contributing to Vimstone Tutor
+
+If you followed the standard installation, the Vimstone tutor files live in
+~/.config/nvim/tutor.
+
+To be able to edit and save them you will need to enable tutor debugging:
+
+~~~ cmd
+:let g:tutor_debug=1
+~~~
+
+Once you're done, you can set set the value back to 0.
+
+The tutorial format is a modified version of markdown. For more info, see
+the [tutor tutor](@tutor:tutor).
+
