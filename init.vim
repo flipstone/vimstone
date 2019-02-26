@@ -167,6 +167,8 @@ noremap <silent> <Leader>fs :write<CR>
 noremap <silent> <Leader>fS :wall<CR>
 noremap <silent> <Leader>bb :CtrlPBuffer<CR>
 
+vnoremap <silent> <Leader>js !jq .<CR>
+
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-o> <Esc>
 
