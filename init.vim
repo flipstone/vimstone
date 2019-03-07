@@ -167,6 +167,12 @@ noremap <silent> <Leader>fs :write<CR>
 noremap <silent> <Leader>fS :wall<CR>
 noremap <silent> <Leader>bb :CtrlPBuffer<CR>
 
+" Sort the list of terms for an import statement in haskell
+" note: this does not sort the type constructors
+"  inside a nested parens, for ex. Maybe(Nothing, Just),
+"  it treats this as one term.
+noremap <silent> <Leader>si V:s/\v[^(]*\(\zs.*\ze\)/\=join(sort(split(submatch(0), '\v(\([^)]*)@<!\s*,\s*')), ', ')<CR>:noh<CR>
+
 vnoremap <silent> <Leader>js !jq .<CR>
 
 tnoremap <Esc> <C-\><C-n>
