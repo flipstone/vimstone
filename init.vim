@@ -253,8 +253,8 @@ let g:tutor_debug=1
 let g:ctrlp_use_caching=0
 
 if executable('rg')
-  let g:ctrlp_user_command='rg %s --files --color never'
-  let g:ackprg='rg --smart-case --no-heading --vimgrep'
+  let g:ctrlp_user_command='rg %s --files --color never --hidden -g !.git'
+  let g:ackprg='rg --smart-case --no-heading --vimgrep --hidden -g !.git'
   let g:ack_apply_qmappings = 1
   let g:ack_qhandler='botright copen | SortQuickfixList'
 elseif executable('ag')
