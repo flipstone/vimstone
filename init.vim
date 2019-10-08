@@ -51,19 +51,25 @@ syntax on
 filetype plugin indent on
 
 "
-" Provide a way to reload the vim setup nicely
+" Provide a way to reload the vim setup nicely. Vim
+" won't let you redefine functions that are currently
+" executing, so we have to guard against reloading these.
 "
-function! s:SourceInitFile()
-  execute ':source '.s:current_filename
-endfunction
+if !exists('s:reloaders_defined')
+  let s:reloaders_defined=1
 
-function! s:Reload()
-  call s:SourceInitFile()
-  PlugInstall
-endfunction
+  function! s:SourceInitFile()
+    execute ':source '.s:current_filename
+  endfunction
 
-command! SourceInitFile call s:SourceInitFile()
-command! Reload call s:Reload()
+  function! s:Reload()
+    call s:SourceInitFile()
+    PlugInstall
+  endfunction
+
+  command! SourceInitFile call s:SourceInitFile()
+  command! Reload call s:Reload()
+endif
 
 "
 " Command to view the git log
