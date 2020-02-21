@@ -1,3 +1,5 @@
+if !exists('g:vscode')
+
 let s:current_filename=expand("<sfile>")
 let s:truecolor=($COLORTERM == "truecolor")
 
@@ -379,3 +381,4 @@ if s:truecolor || has('gui_running')
   let g:terminal_color_15='#ffffff' " white
 endif
 
+endif
