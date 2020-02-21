@@ -142,7 +142,8 @@ let mapleader=" "
 noremap <Leader>sa :Ack!<Space>
 noremap <Leader>sw :Ack! -w '<cword>'<CR>
 
-noremap <silent> <Leader>t :NERDTreeToggle<CR>
+noremap <silent> <Leader>tt :NERDTreeToggle<CR>
+noremap <silent> <Leader>tf :NERDTreeFind<CR>
 noremap <silent> <Leader>a :CtrlP<CR>
 
 noremap <silent> <Leader>gs :Magit<CR>
