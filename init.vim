@@ -19,8 +19,6 @@ Plug 'kien/ctrlp.vim', { 'commit': '564176f' }
 
 Plug 'neovimhaskell/haskell-vim', { 'commit': 'a5302e0' }
 
-Plug 'parsonsmatt/intero-neovim', { 'commit': '9bb546e' }
-
 Plug 'raichoo/purescript-vim', { 'commit': 'ab8547ce' }
 
 Plug 'fatih/vim-go', { 'commit': '8575d9e' }
@@ -28,8 +26,6 @@ Plug 'fatih/vim-go', { 'commit': '8575d9e' }
 Plug 'ElmCast/elm-vim', { 'commit': 'ae53153' }
 
 Plug 'sbdchd/neoformat', { 'commit': '4dba93d' }
-
-Plug 'qxjit/setcolors.vim', { 'commit': 'da71d38' }
 
 Plug 'jreybert/vimagit', { 'commit': '85c25ff' }
 
@@ -44,6 +40,13 @@ Plug 'gcmt/taboo.vim', { 'commit': '1367baf' }
 Plug 'nicwest/vim-http', { 'commit': '99d3edf' }
 
 Plug 'ervandew/supertab', { 'commit': '40fe711' }
+
+Plug 'autozimu/LanguageClient-neovim', {
+    \ 'commit': 'a42594c9c320b1283e9b9058b85a8097d8325fed',
+    \ 'do': 'bash install.sh',
+    \ }
+
+Plug 'neoclide/coc.nvim', {'commit': '7642d233d6abdce9c0076629deaacdb59ea75f70'}
 
 call plug#end()
 
@@ -111,32 +114,6 @@ endfunction
 
 command! -nargs=0 GitBlame call s:GitBlame()
 
-"
-" Command to sort the quickfix list
-"
-function! s:SortQuickfixList()
-  call setqflist(sort(getqflist(), 's:ByQuickFixBuffer'))
-endfunction
-
-function! s:ByQuickFixBuffer(qfA,qfB)
-  let l:bufA = bufname(a:qfA.bufnr)
-  let l:bufB = bufname(a:qfB.bufnr)
-
-  if l:bufA == l:bufB
-    return 0
-  else
-    if l:bufA < l:bufB
-      return -1
-    else
-      return 1
-    endif
-  endif
-endfunction
-
-
-command! SortQuickfixList call s:SortQuickfixList()
-
-
 let mapleader=" "
 
 noremap <Leader>sa :Ack!<Space>
@@ -153,7 +130,6 @@ noremap <silent> <Leader>gb :GitBlame<CR>
 " Mappings for the quickfix list
 noremap <silent> <Leader>co :copen<CR>
 noremap <silent> <Leader>cc :cclose<CR>
-noremap <silent> <Leader>cs :SortQuickfixList<CR>
 
 " Open the quicklist results in a buffer for editing and
 " replacing across all results.
@@ -174,6 +150,9 @@ noremap <silent> <Leader>fs :write<CR>
 noremap <silent> <Leader>fS :wall<CR>
 noremap <silent> <Leader>bb :CtrlPBuffer<CR>
 
+" Mapping to quickly bring up the coc action menu
+noremap <silent> <Leader>ca :CocAction<CR>
+
 " Sort the list of terms for an import statement in haskell
 " note: this does not sort the type constructors
 "  inside a nested parens, for ex. Maybe(Nothing, Just),
@@ -185,74 +164,6 @@ vnoremap <silent> <Leader>js !jq .<CR>
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-o> <Esc>
 
-let g:intero_start_immediately = 0
-
-" Configure intero to use the stack script in the current directory
-" for running stack. Using `cd` (or `lcd`) allows each project to
-" then specify a project-specific way to run stack (e.g. to run
-" stack in a project-specific docker container)
-"
-let g:intero_backend = {
-        \ 'command':
-        \   join([
-        \     './stack',
-        \     'ghci',
-        \     '--with-ghc intero',
-        \     intero#util#stack_build_opts()]
-        \     , ' ')
-        \}
-
-" We don't necessarily *always* want intero to be running,
-" so this command lets us only reload the current file
-" if intero is currently running.
-"
-function! s:InteroReloadIfStarted()
-  if g:intero_started
-    InteroReload
-  endif
-endfunction
-
-command! InteroReloadIfStarted call s:InteroReloadIfStarted()
-
-" This mappings are only available in Haskell files, and only
-" if you have a `stack` script in the project root, where your
-" current directory in the project root.
-"
-augroup InteroMaps
-  au!
-  " Maps for intero. Restrict to Haskell buffers so the bindings don't collide.
-
-  " Background process and window management
-  au FileType haskell nnoremap <silent> <leader>is :InteroStart<CR>
-  au FileType haskell nnoremap <silent> <leader>ik :InteroKill<CR>
-
-  " Open intero/GHCi split horizontally
-  au FileType haskell nnoremap <silent> <leader>io :InteroOpen<CR>
-  " Open intero/GHCi split vertically
-  au FileType haskell nnoremap <silent> <leader>iov :InteroOpen<CR><C-W>H
-  au FileType haskell nnoremap <silent> <leader>ih :InteroHide<CR>
-
-  " Automatically reload on save (if Intero is started)
-  au BufWritePost *.hs InteroReloadIfStarted
-
-  " Load individual modules
-  au FileType haskell nnoremap <silent> <leader>il :InteroLoadCurrentModule<CR>
-  au FileType haskell nnoremap <silent> <leader>if :InteroLoadCurrentFile<CR>
-
-  " Type-related information
-  " Heads up! These next two differ from the rest.
-  au FileType haskell map <silent> <leader>it <Plug>InteroGenericType
-  au FileType haskell map <silent> <leader>iT <Plug>InteroType
-  au FileType haskell nnoremap <silent> <leader>iit :InteroTypeInsert<CR>
-
-  " Navigation
-  au FileType haskell nnoremap <silent> <leader>jd :InteroGoToDef<CR>
-
-  " Managing targets
-  " Prompts you to enter targets (no silent):
-  au FileType haskell nnoremap <leader>ist :InteroSetTargets<SPACE>
-augroup END
-
 " Temporary workaround for tutor links not working when
 " debug is not on. We need to find a better solution though ;(
 let g:tutor_debug=1
@@ -261,15 +172,15 @@ let g:ctrlp_use_caching=0
 
 if executable('rg')
   let g:ctrlp_user_command='rg %s --files --color never --hidden -g !.git'
-  let g:ackprg='rg --smart-case --no-heading --vimgrep --hidden -g !.git'
+  let g:ackprg='rg --smart-case --no-heading --vimgrep --sort path --hidden -g !.git'
   let g:ack_apply_qmappings = 1
-  let g:ack_qhandler='botright copen | SortQuickfixList'
 elseif executable('ag')
   let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
   let g:ackprg='ag --smart-case --vimgrep'
 endif
 
 let purescript_indent_if = 2
+
 let purescript_indent_case = 2
 let purescript_indent_where = 2
 let purescript_indent_do = 2
@@ -309,17 +220,34 @@ set backupdir=~/.config/nvim/backup
 set backupcopy=yes
 
 function! s:ColorOverrides()
-  " Set up highlight group & retain through colorscheme changes
-  highlight ExtraWhitespace ctermbg=88 guibg=red
+  " Darken the background a bit from the Jellybeans default
+  highlight Normal guibg=#0e0e0e
+  highlight NonText guibg=#0e0e0e
+
+  " Highlight trailing whitepace an the end of lines
+  highlight ExtraWhitespace ctermbg=88 guibg=#ee0000
+
+  " Highlight color for highlighting column 80 as a reminder of where to wrap
+  " things
+  highlight ColorColumn guibg=#0c0c0c
 
   " Make line numbers a big more visible with a color matching jellybeans
-  highlight linenr ctermfg=179 guifg=#fad07a
+  highlight linenr ctermfg=179 guibg=#0e0e0e guifg=#fad07a
+  highlight SignColumn guibg=#0e0e0e
 
   " Make the status bar and tabline look nicer
-  highlight StatusLine ctermbg=238 ctermfg=112 guibg=#404040 guifg=#b0cc55
-  highlight StatusLineNC ctermfg=249 guifg=#909090
-  highlight TabLine ctermbg=238 ctermfg=249 guibg=#404040  guifg=#909090
-  highlight TabLineSel ctermbg=238 ctermfg=112 guibg=#404040 guifg=#b0cc55
+  highlight StatusLine ctermbg=238 ctermfg=112 guibg=#1f251f guifg=#b0cc55
+  highlight StatusLineNC ctermfg=249 guibg=#202220 guifg=#909090
+  highlight VertSplit ctermfg=249 guibg=#0e0e0e guifg=#202220
+  highlight TabLine ctermbg=238 ctermfg=249 guibg=#202220 guifg=#909090
+  highlight TabLineSel ctermbg=238 ctermfg=112 guibg=#1f251f guifg=#b0cc55
+
+  " Make Coc auto-complete and errors look nicer
+  highlight CocFloating guibg=#1f1f1f
+  highlight CocErrorFloat ctermfg=1 ctermbg=9 guifg=#EE2222 guibg=#1f1f1f
+  highlight CocErrorLine guifg=#EE2222
+  highlight Pmenu guibg=#1f1f1f guifg=#70b950
+  highlight PmenuSel guibg=#70b950 guifg=#1f1f1f
 endfunction
 
 " disable elm-vim's formatting in favor of NeoFormat
@@ -331,7 +259,7 @@ augroup InitDotVim
   " Set our color overrides when colorscheme is set
   autocmd ColorScheme * call s:ColorOverrides()
 
-  " Display coumn for to delineate long lines
+  " Display column for to delineate long lines
   autocmd BufWinEnter * set colorcolumn=80
 
   " Hack to work around hfsnotify failing to pick up file modified events
@@ -341,10 +269,6 @@ augroup InitDotVim
 
   " Highlight extra whitespace
   autocmd BufRead,InsertLeave * match ExtraWhitespace /\s\+$/
-
-  " Format .hs files automatically with Neoformat
-  autocmd BufWritePre *.hs undojoin | Neoformat
-  autocmd BufWritePre *.elm undojoin | Neoformat
 
   " Workaround for nvim not always calling :set nopaste after paste,
   " which results in :set noexpandtab being turned on globally :(

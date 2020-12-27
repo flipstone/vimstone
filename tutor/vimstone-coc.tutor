@@ -1,0 +1,34 @@
+# IDE integration with Coc.vim
+
+Vimstone uses coc.vim for EDI integration. You may choose to install the
+`haskell-language-server` and `haskell-language-server-wrapper` commands
+globally in your PATH, but more than likely you will want project specific
+settings. If you use `:cd`{normal} or `:lcd`{normal} to move to your project
+directory root, `:CocLocalConfig`{normal}` will create a project-specific
+config that you can check into your project repo. For instance, on a
+project using docker-compose to run a container for haskell development using
+stack, the config might look like this:
+
+{
+  "languageserver": {
+    "haskell": {
+      "command": "docker-compose",
+      "args": ["run", "--rm", "-T", "<docker-compose service name>","stack","exec","haskell-language-server-wrapper","--","--lsp"],
+      "rootPatterns": ["*.cabal", "stack.yaml", "cabal.project", "package.yaml", "hie.yaml"],
+      "filetypes": ["haskell", "lhaskell"]
+    }
+  }
+}
+
+In this scenario, the absolute paths to the source files inside the container
+must match those on the root. The easiest way to accomplish this is to
+configure a host-local `.env` file with a `PROJECT_ROOT` variable that is then
+used inside your `docker-compose.yml` to mount the project files at the same
+path they reside in on the host.
+
+It's also worth noting that the `-T` above is required because otherwise
+`docker-compose` will try to allocate a tty to `stdin`, which will fail when
+launched from the editor because the IO pipe is not a tty.
+
+You can use `:CocRestart` to restart the language server if you change the
+settings.
