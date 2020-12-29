@@ -25,6 +25,8 @@ Plug 'fatih/vim-go', { 'commit': '8575d9e' }
 
 Plug 'ElmCast/elm-vim', { 'commit': 'ae53153' }
 
+Plug 'vmchale/dhall-vim', { 'commit': '77d1c16' }
+
 Plug 'sbdchd/neoformat', { 'commit': '4dba93d' }
 
 Plug 'jreybert/vimagit', { 'commit': '85c25ff' }
