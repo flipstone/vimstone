@@ -43,11 +43,6 @@ Plug 'nicwest/vim-http', { 'commit': '99d3edf' }
 
 Plug 'ervandew/supertab', { 'commit': '40fe711' }
 
-Plug 'autozimu/LanguageClient-neovim', {
-    \ 'commit': 'a42594c9c320b1283e9b9058b85a8097d8325fed',
-    \ 'do': 'bash install.sh',
-    \ }
-
 Plug 'neoclide/coc.nvim', {'commit': '7642d233d6abdce9c0076629deaacdb59ea75f70'}
 
 call plug#end()
