@@ -152,9 +152,6 @@ noremap <silent> <Leader>fs :write<CR>
 noremap <silent> <Leader>fS :wall<CR>
 noremap <silent> <Leader>bb :CtrlPBuffer<CR>
 
-" Mapping to quickly bring up the coc action menu
-noremap <silent> <Leader>ca :CocAction<CR>
-
 " Sort the list of terms for an import statement in haskell
 " note: this does not sort the type constructors
 "  inside a nested parens, for ex. Maybe(Nothing, Just),
@@ -165,6 +162,32 @@ vnoremap <silent> <Leader>js !jq .<CR>
 
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-o> <Esc>
+
+
+" BEGIN coc.vim related configuration
+
+" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" delays and poor user experience.
+set updatetime=300
+
+" Mapping to quickly bring up the coc action menu
+noremap   <silent> <Leader>ca :CocAction<CR>
+" Go to definition ("coc.vim go")
+nmap      <silent> <Leader>cg <Plug>(coc-definition)
+" Show documentotion ("coc.vim docs")
+nnoremap  <silent> <Leader>cd :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" END coc.vim related configuration
 
 " Temporary workaround for tutor links not working when
 " debug is not on. We need to find a better solution though ;(

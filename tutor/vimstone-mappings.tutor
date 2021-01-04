@@ -47,4 +47,10 @@ The following mappings are set up in normal mode by default:
 
 " Bring up the Coc.vim action menu
 <Space>ca
+
+" Go to definition
+<Space>cg
+
+" Show documentation
+<Space>cd
 ~~~
