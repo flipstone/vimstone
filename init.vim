@@ -45,6 +45,8 @@ Plug 'ervandew/supertab', { 'commit': '40fe711' }
 
 Plug 'neoclide/coc.nvim', {'commit': '7642d233d6abdce9c0076629deaacdb59ea75f70'}
 
+Plug 'liuchengxu/vim-which-key', { 'commit': 'c5322b2' }
+
 call plug#end()
 
 syntax on
@@ -111,53 +113,148 @@ endfunction
 
 command! -nargs=0 GitBlame call s:GitBlame()
 
+" This is the prefix diction that mappings should add to below to
+" customize their appears in the which key menu.
+let g:which_key_map =  {}
+
+"
+
 let mapleader=" "
 
+let g:which_key_map.s = { 'name' : '+search' }
+
+let g:which_key_map.s.a = 'search all files in current directory'
 noremap <Leader>sa :Ack!<Space>
+
+let g:which_key_map.s.o = 'open search results window (a.k.a. quickfix list)'
+noremap <silent> <Leader>so :copen<CR>
+
+let g:which_key_map.s.c = 'close search results window (a.k.a. quickfix list)'
+noremap <silent> <Leader>sc :cclose<CR>
+
+let g:which_key_map.s.w = 'search for word under cursor in current directory'
 noremap <Leader>sw :Ack! -w '<cword>'<CR>
 
-noremap <silent> <Leader>tt :NERDTreeToggle<CR>
-noremap <silent> <Leader>tf :NERDTreeFind<CR>
-noremap <silent> <Leader>a :CtrlP<CR>
-
-noremap <silent> <Leader>gs :Magit<CR>
-noremap <silent> <Leader>gl :GitLog<CR>
-noremap <silent> <Leader>gb :GitBlame<CR>
-
-" Mappings for the quickfix list
-noremap <silent> <Leader>co :copen<CR>
-noremap <silent> <Leader>cc :cclose<CR>
-
-" Open the quicklist results in a buffer for editing and
-" replacing across all results.
-noremap <silent> <Leader>cr :execute ':Gqfopen' <Bar> cclose<CR>
+let g:which_key_map.s.r = 'use search results to do a multi-file replace'
+noremap <silent> <Leader>sr :execute ':Gqfopen' <Bar> cclose<CR>
 
 " Special mappings for the quickfix list, because they are
 " easier to hit repeatedly without the preceding 'c'
+let g:which_key_map.n = 'go to next search result'
 noremap <silent> <Leader>n :cnext<CR>
+
+let g:which_key_map.p = 'go to previous search result'
 noremap <silent> <Leader>p :cprevious<CR>
+
+let g:which_key_map.t = { 'name' : '+nerdtree' }
+
+let g:which_key_map.t.t = 'toggle display of NERDTree'
+noremap <silent> <Leader>tt :NERDTreeToggle<CR>
+
+let g:which_key_map.t.f = 'find current file in the NERDTree window'
+noremap <silent> <Leader>tf :NERDTreeFind<CR>
+
+let g:which_key_map.a = 'Open file using fuzzy finder'
+noremap <silent> <Leader>a :CtrlP<CR>
+
+let g:which_key_map.g = { 'name' : '+git' }
+
+let g:which_key_map.g.s = 'stage changes for commit with Magit'
+let g:which_key_map.M = g:which_key_map.g.s " vim magit installs a default binding
+noremap <silent> <Leader>gs :Magit<CR>
+
+let g:which_key_map.g.l = 'git-log the current file'
+noremap <silent> <Leader>gl :GitLog<CR>
+
+let g:which_key_map.g.b = 'git-blame the current file'
+noremap <silent> <Leader>gb :GitBlame<CR>
 
 " Switch to alternate (previous) buffer in a window. See
 " :help alternate
+let g:which_key_map["<Tab>"] = "Switch between currenta and alternate buffer"
 noremap <silent> <Leader><Tab> :buffer #<CR>
-noremap <silent> <Leader>w <C-w>
+
+let g:which_key_map.w = { 'name' : '+window' }
+
+let g:which_key_map.w.c = "Close the current wndow"
+noremap <silent> <Leader>wc <C-w>c
+
+let g:which_key_map.w.o = "'Only' the current wndow (close all others)"
+noremap <silent> <Leader>wo <C-w>o
+
+let g:which_key_map.w.n = "Open a new blank window"
+noremap <silent> <Leader>wn <C-w>n
+
+let g:which_key_map.w.w = "Move cursor to next window"
+noremap <silent> <Leader>ww <C-w>w
+
+let g:which_key_map.w.W = "Move cursor to previous window"
+noremap <silent> <Leader>wW <C-w>W
+
+let g:which_key_map.w.r = "Rotate windows"
+noremap <silent> <Leader>wr <C-w>r
+
+let g:which_key_map.w["="] = "Equalize window sizes"
+noremap <silent> <Leader>w= <C-w>=
+
+let g:which_key_map.w.h = "Move cursor one window left"
+noremap <silent> <Leader>wh <C-w>h
+
+let g:which_key_map.w.j = "Move cursor one window down"
+noremap <silent> <Leader>wj <C-w>j
+
+let g:which_key_map.w.k = "Move cursor one window up"
+noremap <silent> <Leader>wk <C-w>k
+
+let g:which_key_map.w.l = "Move cursor one window right"
+noremap <silent> <Leader>wl <C-w>l
+
+let g:which_key_map.w.H = "Move current window all the way left"
+noremap <silent> <Leader>wH <C-w>H
+
+let g:which_key_map.w.J = "Move current window all the way down"
+noremap <silent> <Leader>wJ <C-w>J
+
+let g:which_key_map.w.K = "Move current window all the way up"
+noremap <silent> <Leader>wK <C-w>K
+
+let g:which_key_map.w.L = "Move current window all the way right"
+noremap <silent> <Leader>wL <C-w>L
+
+let g:which_key_map.w.s = "Split current window horizontally"
+noremap <silent> <Leader>ws <C-w>s
+
+let g:which_key_map.w.v = "Split current window vertically"
+noremap <silent> <Leader>wv <C-w>v
+
+let g:which_key_map.w["/"] = "Split current window vertically"
 noremap <silent> <Leader>w/ :vsplit<CR>
+
+let g:which_key_map.w["-"] = "Split current window horizontally"
 noremap <silent> <Leader>w- :split<CR>
+
+let g:which_key_map.f = { 'name' : '+file' }
+let g:which_key_map.f.s = "Save the current file"
 noremap <silent> <Leader>fs :write<CR>
+
+let g:which_key_map.f.S = "Save all open files"
 noremap <silent> <Leader>fS :wall<CR>
+
+let g:which_key_map.b = { 'name' : '+buffer' }
+let g:which_key_map.b.b = "Switch to buffer using fuzzy finder"
 noremap <silent> <Leader>bb :CtrlPBuffer<CR>
 
-" Sort the list of terms for an import statement in haskell
+let g:which_key_map.o = { 'name' : '+organize' }
+let g:which_key_map.o.i = "Sort list of terms for Haskell import statement"
 " note: this does not sort the type constructors
 "  inside a nested parens, for ex. Maybe(Nothing, Just),
 "  it treats this as one term.
-noremap <silent> <Leader>si V:s/\v[^(]*\(\zs.*\ze\)/\=join(sort(split(submatch(0), '\v(\([^)]*)@<!\s*,\s*')), ', ')<CR>:noh<CR>
+noremap <silent> <Leader>oi V:s/\v[^(]*\(\zs.*\ze\)/\=join(sort(split(submatch(0), '\v(\([^)]*)@<!\s*,\s*')), ', ')<CR>:noh<CR>
 
 vnoremap <silent> <Leader>js !jq .<CR>
 
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-o> <Esc>
-
 
 " BEGIN coc.vim related configuration
 
@@ -166,10 +263,15 @@ tnoremap <C-o> <Esc>
 set updatetime=300
 
 " Mapping to quickly bring up the coc action menu
+let g:which_key_map.c = { 'name' : '+coc.vim' }
+
+let g:which_key_map.c.a = "Open the Coc Actions Menu"
 noremap   <silent> <Leader>ca :CocAction<CR>
-" Go to definition ("coc.vim go")
+
+let g:which_key_map.c.g = "Go to definition"
 nmap      <silent> <Leader>cg <Plug>(coc-definition)
-" Show documentotion ("coc.vim docs")
+
+let g:which_key_map.c.d = "Show documentation"
 nnoremap  <silent> <Leader>cd :call <SID>show_documentation()<CR>
 
 function! s:show_documentation()
@@ -183,6 +285,15 @@ function! s:show_documentation()
 endfunction
 
 " END coc.vim related configuration
+
+
+" WhichKey needs to be at the end to pick up the mappings defined above
+call which_key#register('<Space>', "g:which_key_map")
+
+nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+
+set timeoutlen=300
+
 
 " Temporary workaround for tutor links not working when
 " debug is not on. We need to find a better solution though ;(
