@@ -115,6 +115,10 @@ command! -nargs=0 GitBlame call s:GitBlame()
 
 let mapleader=" "
 
+" This mapping cannot be configured via which-key because it an incomplete
+" command (note it does not end with <CR>)
+nnoremap <leader>sa :Ack!<Space>
+
 " This is the prefix diction that mappings should add to below to
 " customize their appears in the which key menu.
 let g:which_key_map = {
@@ -124,7 +128,7 @@ let g:which_key_map = {
   \ '<Tab>' : [':buffer #', 'Switch between currenta and alternate buffer'],
   \ 's' : {
   \   'name' : '+search',
-  \   'a' : [':Ack!<Space>', 'search all files in current directory'],
+  \   'a' : 'search all files in current directory',
   \   'w' : [":Ack! -w '<cword>'", 'search for word under cursor in current directory'],
   \   'o' : [':copen', 'open search results window (a.k.a. quickfix list)'],
   \   'c' : [':cclose', 'close search results window (a.k.a. quickfix list)'],
