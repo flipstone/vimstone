@@ -43,7 +43,7 @@ Plug 'nicwest/vim-http', { 'commit': '99d3edf' }
 
 Plug 'ervandew/supertab', { 'commit': '40fe711' }
 
-Plug 'neoclide/coc.nvim', {'commit': '7642d233d6abdce9c0076629deaacdb59ea75f70'}
+Plug 'neoclide/coc.nvim', {'commit': '5b4b18d2ed2b18870034c7ee853164e1274ab158'}
 
 Plug 'liuchengxu/vim-which-key', { 'commit': 'c5322b2' }
 
