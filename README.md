@@ -18,6 +18,17 @@ See `:Tutor vimstone-upgrading`
 
 ## Learning the ropes
 
-`:Tutor` is your friend! Run it to get a very basic introduction to vim. There's also a tutorial for
-Vimstone itself: `:Tutor vimstone`! It will help you get familiar with the specific plugins and mappings
-that are set up for you.
+### Mappings
+
+vimstone includes the `which-key` plugin, which makes mappings more
+discoverable.  All the custom vimstone mappings use the the space key as the
+leader. If you hit space without any other characters a menu will appear
+showing you what possible characters after space might lead to a mapping. If
+you keep hitting characters in the map submenus will be present until you get
+to a mapping with a command attached.
+
+### Tutor
+
+`:Tutor` is your friend! Run it to get a very basic introduction to vim.
+There's also a tutorial for Vimstone itself: `:Tutor vimstone`! It will help
+you get familiar with the specific plugin.
