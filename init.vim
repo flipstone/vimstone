@@ -183,6 +183,7 @@ let g:which_key_map = {
   \   'd' : ['init#show_documentation()', 'Show documentation'],
   \   },
   \ 'o' : {
+  \   'name' : '+organize',
   \   'i' : ['init#sort_haskell_import()', 'Sort list of terms in a Haskell import statement']
   \   },
   \ }
