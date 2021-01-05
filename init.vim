@@ -113,143 +113,87 @@ endfunction
 
 command! -nargs=0 GitBlame call s:GitBlame()
 
-" This is the prefix diction that mappings should add to below to
-" customize their appears in the which key menu.
-let g:which_key_map =  {}
-
-"
-
 let mapleader=" "
 
-let g:which_key_map.s = { 'name' : '+search' }
+" This is the prefix diction that mappings should add to below to
+" customize their appears in the which key menu.
+let g:which_key_map = {
+  \ 'n' : [':cnext', 'go to next search result'],
+  \ 'p' : [':cprevious', 'go to previous search result'],
+  \ 'a' : [':CtrlP', 'Open file using fuzzy finder'],
+  \ '<Tab>' : [':buffer #', 'Switch between currenta and alternate buffer'],
+  \ 's' : {
+  \   'name' : '+search',
+  \   'a' : [':Ack!<Space>', 'search all files in current directory'],
+  \   'w' : [":Ack! -w '<cword>'", 'search for word under cursor in current directory'],
+  \   'o' : [':copen', 'open search results window (a.k.a. quickfix list)'],
+  \   'c' : [':cclose', 'close search results window (a.k.a. quickfix list)'],
+  \   'r' : [":execute ':Gqfopen' <Bar> cclose", 'use search results to do a multi-file replace'],
+  \   },
+  \ 't' : {
+  \   'name' : '+nerdtree',
+  \   't' : [ ':NERDTreeToggle', 'toggle display of NERDTree'],
+  \   'f' : [ ':NERDTreeFind', 'find current file in the NERDTree window'],
+  \   },
+  \ 'g' : {
+  \   'name' : '+git',
+  \   's' : [':Magit'    , 'Stage changes for commit with Magit'],
+  \   'l' : [':GitLog'   , 'git-log the current file'],
+  \   'b' : [':GitBlame' , 'git-blame the current file'],
+  \   },
+  \ 'w' : {
+  \   'name' : '+window',
+  \   'c' : [':wincmd c', 'close the current window'],
+  \   'o' : [':wincmd o', '"only" the current wndow (close all others)'],
+  \   'n' : [':wincmd n', 'open a new blank window'],
+  \   'w' : [':wincmd w', 'move cursor to next window'],
+  \   'W' : [':wincmd W', 'move cursor to previous window'],
+  \   'r' : [':wincmd r', 'rotate windows'],
+  \   '=' : [':wincmd =', 'equalize window sizes'],
+  \   'h' : [':wincmd h', 'move cursor one window left'],
+  \   'j' : [':wincmd j', 'move cursor one window down'],
+  \   'k' : [':wincmd k', 'move cursor one window up'],
+  \   'l' : [':wincmd l', 'move cursor one window right'],
+  \   'H' : [':wincmd H', 'move current window all the way left'],
+  \   'J' : [':wincmd J', 'move current window all the way down'],
+  \   'K' : [':wincmd K', 'move current window all the way up'],
+  \   'L' : [':wincmd L', 'move current window all the way right'],
+  \   's' : [':wincmd s', 'Split current window horizontally'],
+  \   'v' : [':wincmd v', 'Split current window vertically'],
+  \   '/' : [':wincmd v', 'Split current window vertically'],
+  \   '-' : [':wincmd s', 'Split current window horizontally'],
+  \   },
+  \ 'f' : {
+  \   'name' : '+file',
+  \   's' : [':write', 'Save the current file'],
+  \   'S' : [':wall', 'Save all open current file'],
+  \   },
+  \ 'b' : {
+  \   'name' : '+buffer',
+  \   'b' : [':CtrlPBuffer', 'Switch to buffer using fuzzy finder'],
+  \   },
+  \ 'c' : {
+  \   'name' : '+coc.vim',
+  \   'a' : [':CocAction', 'Open the Coc Actions Menu'],
+  \   'g' : ['CocAction("jumpDefinition")', 'Go to definition'],
+  \   'd' : ['init#show_documentation()', 'Show documentation'],
+  \   },
+  \ 'o' : {
+  \   'i' : ['init#sort_haskell_import()', 'Sort list of terms in a Haskell import statement']
+  \   },
+  \ }
 
-let g:which_key_map.s.a = 'search all files in current directory'
-noremap <Leader>sa :Ack!<Space>
-
-let g:which_key_map.s.o = 'open search results window (a.k.a. quickfix list)'
-noremap <silent> <Leader>so :copen<CR>
-
-let g:which_key_map.s.c = 'close search results window (a.k.a. quickfix list)'
-noremap <silent> <Leader>sc :cclose<CR>
-
-let g:which_key_map.s.w = 'search for word under cursor in current directory'
-noremap <Leader>sw :Ack! -w '<cword>'<CR>
-
-let g:which_key_map.s.r = 'use search results to do a multi-file replace'
-noremap <silent> <Leader>sr :execute ':Gqfopen' <Bar> cclose<CR>
-
-" Special mappings for the quickfix list, because they are
-" easier to hit repeatedly without the preceding 'c'
-let g:which_key_map.n = 'go to next search result'
-noremap <silent> <Leader>n :cnext<CR>
-
-let g:which_key_map.p = 'go to previous search result'
-noremap <silent> <Leader>p :cprevious<CR>
-
-let g:which_key_map.t = { 'name' : '+nerdtree' }
-
-let g:which_key_map.t.t = 'toggle display of NERDTree'
-noremap <silent> <Leader>tt :NERDTreeToggle<CR>
-
-let g:which_key_map.t.f = 'find current file in the NERDTree window'
-noremap <silent> <Leader>tf :NERDTreeFind<CR>
-
-let g:which_key_map.a = 'Open file using fuzzy finder'
-noremap <silent> <Leader>a :CtrlP<CR>
-
-let g:which_key_map.g = { 'name' : '+git' }
-
-let g:which_key_map.g.s = 'stage changes for commit with Magit'
-let g:which_key_map.M = g:which_key_map.g.s " vim magit installs a default binding
-noremap <silent> <Leader>gs :Magit<CR>
-
-let g:which_key_map.g.l = 'git-log the current file'
-noremap <silent> <Leader>gl :GitLog<CR>
-
-let g:which_key_map.g.b = 'git-blame the current file'
-noremap <silent> <Leader>gb :GitBlame<CR>
-
-" Switch to alternate (previous) buffer in a window. See
-" :help alternate
-let g:which_key_map["<Tab>"] = "Switch between currenta and alternate buffer"
-noremap <silent> <Leader><Tab> :buffer #<CR>
-
-let g:which_key_map.w = { 'name' : '+window' }
-
-let g:which_key_map.w.c = "Close the current wndow"
-noremap <silent> <Leader>wc <C-w>c
-
-let g:which_key_map.w.o = "'Only' the current wndow (close all others)"
-noremap <silent> <Leader>wo <C-w>o
-
-let g:which_key_map.w.n = "Open a new blank window"
-noremap <silent> <Leader>wn <C-w>n
-
-let g:which_key_map.w.w = "Move cursor to next window"
-noremap <silent> <Leader>ww <C-w>w
-
-let g:which_key_map.w.W = "Move cursor to previous window"
-noremap <silent> <Leader>wW <C-w>W
-
-let g:which_key_map.w.r = "Rotate windows"
-noremap <silent> <Leader>wr <C-w>r
-
-let g:which_key_map.w["="] = "Equalize window sizes"
-noremap <silent> <Leader>w= <C-w>=
-
-let g:which_key_map.w.h = "Move cursor one window left"
-noremap <silent> <Leader>wh <C-w>h
-
-let g:which_key_map.w.j = "Move cursor one window down"
-noremap <silent> <Leader>wj <C-w>j
-
-let g:which_key_map.w.k = "Move cursor one window up"
-noremap <silent> <Leader>wk <C-w>k
-
-let g:which_key_map.w.l = "Move cursor one window right"
-noremap <silent> <Leader>wl <C-w>l
-
-let g:which_key_map.w.H = "Move current window all the way left"
-noremap <silent> <Leader>wH <C-w>H
-
-let g:which_key_map.w.J = "Move current window all the way down"
-noremap <silent> <Leader>wJ <C-w>J
-
-let g:which_key_map.w.K = "Move current window all the way up"
-noremap <silent> <Leader>wK <C-w>K
-
-let g:which_key_map.w.L = "Move current window all the way right"
-noremap <silent> <Leader>wL <C-w>L
-
-let g:which_key_map.w.s = "Split current window horizontally"
-noremap <silent> <Leader>ws <C-w>s
-
-let g:which_key_map.w.v = "Split current window vertically"
-noremap <silent> <Leader>wv <C-w>v
-
-let g:which_key_map.w["/"] = "Split current window vertically"
-noremap <silent> <Leader>w/ :vsplit<CR>
-
-let g:which_key_map.w["-"] = "Split current window horizontally"
-noremap <silent> <Leader>w- :split<CR>
-
-let g:which_key_map.f = { 'name' : '+file' }
-let g:which_key_map.f.s = "Save the current file"
-noremap <silent> <Leader>fs :write<CR>
-
-let g:which_key_map.f.S = "Save all open files"
-noremap <silent> <Leader>fS :wall<CR>
-
-let g:which_key_map.b = { 'name' : '+buffer' }
-let g:which_key_map.b.b = "Switch to buffer using fuzzy finder"
-noremap <silent> <Leader>bb :CtrlPBuffer<CR>
-
-let g:which_key_map.o = { 'name' : '+organize' }
-let g:which_key_map.o.i = "Sort list of terms for Haskell import statement"
 " note: this does not sort the type constructors
 "  inside a nested parens, for ex. Maybe(Nothing, Just),
 "  it treats this as one term.
-noremap <silent> <Leader>oi V:s/\v[^(]*\(\zs.*\ze\)/\=join(sort(split(submatch(0), '\v(\([^)]*)@<!\s*,\s*')), ', ')<CR>:noh<CR>
+function! init#sort_haskell_import()
+  s/\v[^(]*\(\zs.*\ze\)/\=join(sort(split(submatch(0), '\v(\([^)]*)@<!\s*,\s*')), ', ')
+endfunction
+
+" vim magit installs a default binding that we prefer not to show. Unmapping
+" it in this file doesn't appear to work when the file is loaded the first
+" time (though it does unmap if you load it again)
+let g:which_key_map.M = "which_key_ignore"
 
 vnoremap <silent> <Leader>js !jq .<CR>
 
@@ -262,19 +206,7 @@ tnoremap <C-o> <Esc>
 " delays and poor user experience.
 set updatetime=300
 
-" Mapping to quickly bring up the coc action menu
-let g:which_key_map.c = { 'name' : '+coc.vim' }
-
-let g:which_key_map.c.a = "Open the Coc Actions Menu"
-noremap   <silent> <Leader>ca :CocAction<CR>
-
-let g:which_key_map.c.g = "Go to definition"
-nmap      <silent> <Leader>cg <Plug>(coc-definition)
-
-let g:which_key_map.c.d = "Show documentation"
-nnoremap  <silent> <Leader>cd :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
+function! init#show_documentation()
   if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
   elseif (coc#rpc#ready())
