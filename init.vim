@@ -41,8 +41,6 @@ Plug 'gcmt/taboo.vim', { 'commit': '1367baf' }
 
 Plug 'nicwest/vim-http', { 'commit': '99d3edf' }
 
-Plug 'ervandew/supertab', { 'commit': '40fe711' }
-
 Plug 'neoclide/coc.nvim', {'commit': '5b4b18d2ed2b18870034c7ee853164e1274ab158'}
 
 Plug 'liuchengxu/vim-which-key', { 'commit': 'c5322b2' }
@@ -220,6 +218,9 @@ function! init#show_documentation()
     execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
 
 " END coc.vim related configuration
 
