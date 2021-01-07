@@ -179,6 +179,11 @@ let g:which_key_map = {
   \   'a' : [':CocAction', 'Open the Coc Actions Menu'],
   \   'g' : ['CocAction("jumpDefinition")', 'Go to definition'],
   \   'd' : ['init#show_documentation()', 'Show documentation'],
+  \   'o' : [':lopen', 'Open coc.vim file diagnostics'],
+  \   'c' : [':lclose', 'Close coc.vim file diagnostics'],
+  \   'n' : [':lnext', 'Move to next diagnostic entry'],
+  \   'p' : [':lprev', 'Move to previous diagnostic entry'],
+  \   's' : ['init#coc_scroll_help()', 'Learn how to scroll coc.vim float windows'],
   \   },
   \ 'o' : {
   \   'name' : '+organize',
@@ -204,6 +209,9 @@ tnoremap <Esc> <C-\><C-n>
 tnoremap <C-o> <Esc>
 
 " BEGIN coc.vim related configuration
+"
+" Much of this is snippets cribbed from
+"  https://github.com/neoclide/coc.nvim/tree/5b8af3eaee714f2c390f2f8e83ea47b78d24eab8
 
 " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
 " delays and poor user experience.
@@ -221,6 +229,29 @@ endfunction
 
 inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
 inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+" Remap <C-f> and <C-b> for scroll float windows/popups
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+function! init#coc_scroll_help()
+  echo "Use CTRL-F and CTRL-B to scroll coc.vim float windows!"
+endfunction
 
 " END coc.vim related configuration
 
