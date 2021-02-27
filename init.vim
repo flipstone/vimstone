@@ -45,6 +45,8 @@ Plug 'neoclide/coc.nvim', {'commit': '5b4b18d2ed2b18870034c7ee853164e1274ab158'}
 
 Plug 'liuchengxu/vim-which-key', { 'commit': 'c5322b2' }
 
+Plug 'dag/vim-fish', { 'commit': '50b95cb' }
+
 call plug#end()
 
 syntax on
