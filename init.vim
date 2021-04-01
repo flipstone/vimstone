@@ -31,8 +31,6 @@ Plug 'sbdchd/neoformat', { 'commit': '4dba93d' }
 
 Plug 'jreybert/vimagit', { 'commit': '85c25ff' }
 
-Plug 'skwp/greplace.vim', { 'commit': 'a34dff3' }
-
 Plug 'tpope/vim-surround', { 'commit': 'e49d6c2' }
 
 Plug 'tpope/vim-repeat', { 'commit': '8106e14' }
@@ -115,9 +113,12 @@ command! -nargs=0 GitBlame call s:GitBlame()
 
 let mapleader=" "
 
-" This mapping cannot be configured via which-key because it an incomplete
+" These mappings cannot be configured via which-key because it an incomplete
 " command (note it does not end with <CR>)
 nnoremap <leader>sa :Ack!<Space>
+nnoremap <leader>sr :CocSearch<Space>
+" Also have this under the coc.vim bindings so it's discoverable in both places
+nnoremap <leader>cr :CocSearch<Space>
 
 " This is the prefix diction that mappings should add to below to
 " customize their appears in the which key menu.
@@ -132,7 +133,7 @@ let g:which_key_map = {
   \   'w' : [":Ack! -w '<cword>'", 'search for word under cursor in current directory'],
   \   'o' : [':copen', 'open search results window (a.k.a. quickfix list)'],
   \   'c' : [':cclose', 'close search results window (a.k.a. quickfix list)'],
-  \   'r' : [":execute ':Gqfopen' <Bar> cclose", 'use search results to do a multi-file replace'],
+  \   'r' : 'Use :CocSearch to open a search and replace buffer',
   \   },
   \ 't' : {
   \   'name' : '+nerdtree',
@@ -185,6 +186,7 @@ let g:which_key_map = {
   \   'c' : [':lclose', 'Close coc.vim file diagnostics'],
   \   'n' : [':lnext', 'Move to next diagnostic entry'],
   \   'p' : [':lprev', 'Move to previous diagnostic entry'],
+  \   'r' : 'Use :CocSearch to open a search and replace buffer',
   \   's' : ['init#coc_scroll_help()', 'Learn how to scroll coc.vim float windows'],
   \   },
   \ 'o' : {
@@ -252,7 +254,7 @@ if has('nvim-0.4.0') || has('patch-8.2.0750')
 endif
 
 function! init#coc_scroll_help()
-  echo "Use CTRL-F and CTRL-B to scroll coc.vim float windows!"
+  echo "Use <space>ww to switch to the window and then scroll like normal!"
 endfunction
 
 " END coc.vim related configuration
