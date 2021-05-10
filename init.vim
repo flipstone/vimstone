@@ -45,6 +45,8 @@ Plug 'liuchengxu/vim-which-key', { 'commit': 'c5322b2' }
 
 Plug 'dag/vim-fish', { 'commit': '50b95cb' }
 
+Plug 'godlygeek/tabular', { 'commit': '339091a' }
+
 call plug#end()
 
 syntax on
@@ -208,6 +210,15 @@ endfunction
 let g:which_key_map.M = "which_key_ignore"
 
 vnoremap <silent> <Leader>js !jq .<CR>
+
+" Easy vertical alignment on common syntactic elements.
+" Handy for aligning case blocks on (->), record definitions on (::), etc.
+" In visual mode, just type leader then the punctuation you want to align on
+let g:haskell_tabular = 1
+vnoremap <leader>= :Tabularize /=<CR>
+vnoremap <leader>:: :Tabularize /::<CR>
+vnoremap <leader>-> :Tabularize /-><CR>
+vnoremap <leader>, :Tabularize /,<CR>
 
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-o> <Esc>
