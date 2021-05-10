@@ -215,10 +215,10 @@ vnoremap <silent> <Leader>js !jq .<CR>
 " Handy for aligning case blocks on (->), record definitions on (::), etc.
 " In visual mode, just type leader then the punctuation you want to align on
 let g:haskell_tabular = 1
-vnoremap <leader>= :Tabularize /=<CR>
-vnoremap <leader>:: :Tabularize /::<CR>
-vnoremap <leader>-> :Tabularize /-><CR>
-vnoremap <leader>, :Tabularize /,<CR>
+vnoremap <leader>o= :Tabularize /=<CR>
+vnoremap <leader>o:: :Tabularize /::<CR>
+vnoremap <leader>o-> :Tabularize /-><CR>
+vnoremap <leader>o, :Tabularize /,<CR>
 
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-o> <Esc>
