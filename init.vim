@@ -197,6 +197,21 @@ let g:which_key_map = {
   \   },
   \ }
 
+let g:which_key_visual_map = {
+  \ 'o' : {
+  \   'name' : '+organize',
+  \   '=' : [':Tabularize /=', 'Align selection on ='],
+  \   ':' : {
+  \     ':' : [':Tabularize /::', 'Align selection on ::'],
+  \     },
+  \   '-' : {
+  \     '>' : [':Tabularize /->', 'Align selection on ->'],
+  \     },
+  \   ',' : [':Tabularize /,', 'Align selection on ,'],
+  \   'w' : ['gw', 'Word wrap selection'],
+  \   },
+  \ }
+
 " note: this does not sort the type constructors
 "  inside a nested parens, for ex. Maybe(Nothing, Just),
 "  it treats this as one term.
@@ -215,10 +230,6 @@ vnoremap <silent> <Leader>js !jq .<CR>
 " Handy for aligning case blocks on (->), record definitions on (::), etc.
 " In visual mode, just type leader then the punctuation you want to align on
 let g:haskell_tabular = 1
-vnoremap <leader>o= :Tabularize /=<CR>
-vnoremap <leader>o:: :Tabularize /::<CR>
-vnoremap <leader>o-> :Tabularize /-><CR>
-vnoremap <leader>o, :Tabularize /,<CR>
 
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-o> <Esc>
@@ -273,8 +284,11 @@ endfunction
 
 " WhichKey needs to be at the end to pick up the mappings defined above
 call which_key#register('<Space>', "g:which_key_map")
+call which_key#register('<VisualBindings>', "g:which_key_visual_map")
+
 
 nnoremap <silent> <leader> :WhichKey '<Space>'<CR>
+vnoremap <silent> <leader> :WhichKeyVisual '<VisualBindings>'<CR>
 
 set timeoutlen=300
 
