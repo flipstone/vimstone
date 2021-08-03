@@ -218,8 +218,9 @@ let g:which_key_map = {
   \   'a' : ['init#code_action()', 'Open the code action menu'],
   \   'g' : ['init#go_to_definition()', 'Go to definition'],
   \   'd' : ['init#show_documentation()', 'Show documentation'],
+  \   'r' : ['init#references()', 'Show references'],
   \   'i' : [':LspInfo', 'Show LSP Status Info'],
-  \   'r' : [':LspRestart', 'Restart LSP Server'],
+  \   't' : [':LspRestart', 'Restart LSP Server'],
   \   's' : [':LspStart', 'Start LSP Server'],
   \   'x' : [':LspStop', 'Stop LSP Server'],
   \   },
@@ -246,6 +247,10 @@ endfunction
 
 function! init#show_documentation()
   :lua vim.lsp.buf.hover()
+endfunction
+
+function! init#references()
+  :lua vim.lsp.buf.references()
 endfunction
 
 " vim magit installs a default binding that we prefer not to show. Unmapping
