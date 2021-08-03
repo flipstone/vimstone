@@ -43,7 +43,7 @@ Plug 'dag/vim-fish', { 'commit': '50b95cb' }
 
 Plug 'godlygeek/tabular', { 'commit': '339091a' }
 
-Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lspconfig', { 'commit': '4bcc485' }
 
 " BEGIN telescope dependencies
 Plug 'nvim-lua/popup.nvim', { 'commit': '5e3bece' }
