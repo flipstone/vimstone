@@ -15,8 +15,6 @@ Plug 'mileszs/ack.vim', { 'commit': '36e40f9' }
 
 Plug 'flazz/vim-colorschemes', { 'commit': 'eab3157' }
 
-Plug 'kien/ctrlp.vim', { 'commit': '564176f' }
-
 Plug 'neovimhaskell/haskell-vim', { 'commit': 'a5302e0' }
 
 Plug 'raichoo/purescript-vim', { 'commit': 'ab8547ce' }
@@ -39,18 +37,55 @@ Plug 'gcmt/taboo.vim', { 'commit': '1367baf' }
 
 Plug 'nicwest/vim-http', { 'commit': '99d3edf' }
 
-Plug 'neoclide/coc.nvim', {'commit': '5b4b18d2ed2b18870034c7ee853164e1274ab158'}
-
 Plug 'liuchengxu/vim-which-key', { 'commit': 'c5322b2' }
 
 Plug 'dag/vim-fish', { 'commit': '50b95cb' }
 
 Plug 'godlygeek/tabular', { 'commit': '339091a' }
 
+Plug 'neovim/nvim-lspconfig', { 'commit': '4bcc485' }
+
+" BEGIN telescope dependencies
+Plug 'nvim-lua/popup.nvim', { 'commit': '5e3bece' }
+Plug 'nvim-lua/plenary.nvim', { 'commit': 'd897b4d' }
+" END telescope dependencies
+
+Plug 'nvim-telescope/telescope.nvim', { 'commit': 'b742c50' }
+
+Plug 'hrsh7th/nvim-compe', { 'commit': '73529ce' }
+
+Plug 'dyng/ctrlsf.vim', { 'commit': '51c5b28' }
+
+
 call plug#end()
 
 syntax on
 filetype plugin indent on
+
+" BEGIN nvim-compe related config
+set completeopt=menuone,noselect
+
+let g:compe = {}
+
+let g:compe.source = {}
+let g:compe.source.path = v:true
+let g:compe.source.buffer = v:true
+let g:compe.source.calc = v:true
+let g:compe.source.nvim_lsp = v:true
+let g:compe.source.nvim_lua = v:true
+let g:compe.source.vsnip = v:false
+let g:compe.source.ultisnips = v:false
+let g:compe.source.luasnip = v:false
+let g:compe.source.emoji = v:false
+
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+inoremap <silent><expr> <C-Space> compe#complete()
+inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+
+
+" END nvim-compe related config
 
 "
 " Provide a way to reload the vim setup nicely. Vim
@@ -118,16 +153,14 @@ let mapleader=" "
 " These mappings cannot be configured via which-key because it an incomplete
 " command (note it does not end with <CR>)
 nnoremap <leader>sa :Ack!<Space>
-nnoremap <leader>sr :CocSearch<Space>
-" Also have this under the coc.vim bindings so it's discoverable in both places
-nnoremap <leader>cr :CocSearch<Space>
+nnoremap <leader>sr :CtrlSF<Space>
 
 " This is the prefix diction that mappings should add to below to
 " customize their appears in the which key menu.
 let g:which_key_map = {
   \ 'n' : [':cnext', 'go to next search result'],
   \ 'p' : [':cprevious', 'go to previous search result'],
-  \ 'a' : [':CtrlP', 'Open file using fuzzy finder'],
+  \ 'a' : [':Telescope find_files', 'Open file using fuzzy finder'],
   \ '<Tab>' : [':buffer #', 'Switch between currenta and alternate buffer'],
   \ 's' : {
   \   'name' : '+search',
@@ -135,7 +168,8 @@ let g:which_key_map = {
   \   'w' : [":Ack! -w '<cword>'", 'search for word under cursor in current directory'],
   \   'o' : [':copen', 'open search results window (a.k.a. quickfix list)'],
   \   'c' : [':cclose', 'close search results window (a.k.a. quickfix list)'],
-  \   'r' : 'Use :CocSearch to open a search and replace buffer',
+  \   'r' : 'Open a search and replace buffer via :CtrlSF',
+  \   'l' : [':Telescope live_grep', 'Live search with preview via :Telescope'],
   \   },
   \ 't' : {
   \   'name' : '+nerdtree',
@@ -177,19 +211,19 @@ let g:which_key_map = {
   \   },
   \ 'b' : {
   \   'name' : '+buffer',
-  \   'b' : [':CtrlPBuffer', 'Switch to buffer using fuzzy finder'],
+  \   'b' : [':Telescope buffers', 'Switch to buffer using fuzzy finder'],
   \   },
   \ 'c' : {
-  \   'name' : '+coc.vim',
-  \   'a' : [':CocAction', 'Open the Coc Actions Menu'],
-  \   'g' : ['CocAction("jumpDefinition")', 'Go to definition'],
+  \   'name' : '+code (lsp)',
+  \   'a' : ['init#code_action()', 'Open the code action menu'],
+  \   'g' : ['init#go_to_definition()', 'Go to definition'],
   \   'd' : ['init#show_documentation()', 'Show documentation'],
-  \   'o' : [':lopen', 'Open coc.vim file diagnostics'],
-  \   'c' : [':lclose', 'Close coc.vim file diagnostics'],
-  \   'n' : [':lnext', 'Move to next diagnostic entry'],
-  \   'p' : [':lprev', 'Move to previous diagnostic entry'],
-  \   'r' : 'Use :CocSearch to open a search and replace buffer',
-  \   's' : ['init#coc_scroll_help()', 'Learn how to scroll coc.vim float windows'],
+  \   'e' : ['init#manual_show_error_popup()', 'Show or focus error popup'],
+  \   'r' : ['init#references()', 'Show references'],
+  \   'i' : [':LspInfo', 'Show LSP Status Info'],
+  \   't' : [':LspRestart', 'Restart LSP Server'],
+  \   's' : [':LspStart', 'Start LSP Server'],
+  \   'x' : [':LspStop', 'Stop LSP Server'],
   \   },
   \ 'o' : {
   \   'name' : '+organize',
@@ -219,6 +253,30 @@ function! init#sort_haskell_import()
   s/\v[^(]*\(\zs.*\ze\)/\=join(sort(split(submatch(0), '\v(\([^)]*)@<!\s*,\s*')), ', ')
 endfunction
 
+function! init#code_action()
+  :lua vim.lsp.buf.code_action()
+endfunction
+
+function! init#go_to_definition()
+  :lua vim.lsp.buf.definition()
+endfunction
+
+function! init#show_documentation()
+  :lua vim.lsp.buf.hover()
+endfunction
+
+function! init#references()
+  :lua vim.lsp.buf.references()
+endfunction
+
+function! init#manual_show_error_popup()
+  :lua vim.lsp.diagnostic.show_line_diagnostics({show_header = false, focusable = true})
+endfunction
+
+function! init#auto_show_error_popup()
+  :lua vim.lsp.diagnostic.show_line_diagnostics({show_header = false, focusable = false})
+endfunction
+
 " vim magit installs a default binding that we prefer not to show. Unmapping
 " it in this file doesn't appear to work when the file is loaded the first
 " time (though it does unmap if you load it again)
@@ -233,54 +291,6 @@ let g:haskell_tabular = 1
 
 tnoremap <Esc> <C-\><C-n>
 tnoremap <C-o> <Esc>
-
-" BEGIN coc.vim related configuration
-"
-" Much of this is snippets cribbed from
-"  https://github.com/neoclide/coc.nvim/tree/5b8af3eaee714f2c390f2f8e83ea47b78d24eab8
-
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
-
-function! init#show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
-
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
-
-" Remap <C-f> and <C-b> for scroll float windows/popups
-if has('nvim-0.4.0') || has('patch-8.2.0750')
-  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
-  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
-  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
-  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
-endif
-
-function! init#coc_scroll_help()
-  echo "Use <space>ww to switch to the window and then scroll like normal!"
-endfunction
-
-" END coc.vim related configuration
-
 
 " WhichKey needs to be at the end to pick up the mappings defined above
 call which_key#register('<Space>', "g:which_key_map")
@@ -297,16 +307,8 @@ set timeoutlen=300
 " debug is not on. We need to find a better solution though ;(
 let g:tutor_debug=1
 
-let g:ctrlp_use_caching=0
-
-if executable('rg')
-  let g:ctrlp_user_command='rg %s --files --color never --hidden -g !.git'
-  let g:ackprg='rg --smart-case --no-heading --vimgrep --sort path --hidden -g !.git'
-  let g:ack_apply_qmappings = 1
-elseif executable('ag')
-  let g:ctrlp_user_command='ag %s -l --nocolor -g ""'
-  let g:ackprg='ag --smart-case --vimgrep'
-endif
+let g:ackprg='rg --smart-case --no-heading --vimgrep --sort path --hidden -g !.git'
+let g:ack_apply_qmappings = 1
 
 let purescript_indent_if = 2
 
@@ -334,7 +336,7 @@ endif
 set mouse=a
 
 set undofile
-set undodir=~/.config/nvim/undodir
+set undodir=~/.config/nvim/undodir-0.5.0
 
 " Store backups in a different directory to avoid spamming filesystem
 " events inside projects
@@ -432,3 +434,36 @@ if s:truecolor || has('gui_running')
   let g:terminal_color_15='#ffffff' " white
 endif
 
+" BEGIN lsp related config
+
+lua <<EOF
+require'lspconfig'.hls.setup{
+  cmd = { "./.vim/haskell-language-server-wrapper", "--lsp" },
+  flags = { debounce_text_changes = 500, }
+}
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+    underline = true,
+    signs = true,
+  }
+)
+EOF
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+set updatetime=300
+
+augroup InitDotVimLSP
+  autocmd CursorHold * call init#auto_show_error_popup()
+augroup END
+
+" END lsp related config
