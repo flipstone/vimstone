@@ -218,6 +218,7 @@ let g:which_key_map = {
   \   'a' : ['init#code_action()', 'Open the code action menu'],
   \   'g' : ['init#go_to_definition()', 'Go to definition'],
   \   'd' : ['init#show_documentation()', 'Show documentation'],
+  \   'e' : ['init#manual_show_error_popup()', 'Show or focus error popup'],
   \   'r' : ['init#references()', 'Show references'],
   \   'i' : [':LspInfo', 'Show LSP Status Info'],
   \   't' : [':LspRestart', 'Restart LSP Server'],
@@ -251,6 +252,14 @@ endfunction
 
 function! init#references()
   :lua vim.lsp.buf.references()
+endfunction
+
+function! init#manual_show_error_popup()
+  :lua vim.lsp.diagnostic.show_line_diagnostics({show_header = false, focusable = true})
+endfunction
+
+function! init#auto_show_error_popup()
+  :lua vim.lsp.diagnostic.show_line_diagnostics({show_header = false, focusable = false})
 endfunction
 
 " vim magit installs a default binding that we prefer not to show. Unmapping
@@ -418,6 +427,14 @@ require'lspconfig'.hls.setup{
   cmd = { "./.vim/haskell-language-server-wrapper", "--lsp" },
   flags = { debounce_text_changes = 500, }
 }
+
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+  vim.lsp.diagnostic.on_publish_diagnostics, {
+    virtual_text = false,
+    underline = true,
+    signs = true,
+  }
+)
 EOF
 
 " Always show the signcolumn, otherwise it would shift the text each time
@@ -429,5 +446,10 @@ else
   set signcolumn=yes
 endif
 
-" END lsp related config
+set updatetime=300
 
+augroup InitDotVimLSP
+  autocmd CursorHold * call init#auto_show_error_popup()
+augroup END
+
+" END lsp related config
