@@ -208,6 +208,7 @@ let g:which_key_map = {
   \   'name' : '+file',
   \   's' : [':write', 'Save the current file'],
   \   'S' : [':wall', 'Save all open current file'],
+  \   'r' : [':Telescope oldfiles', 'Switch to a recently opened file'],
   \   },
   \ 'b' : {
   \   'name' : '+buffer',
