@@ -225,6 +225,8 @@ let g:which_key_map = {
   \   't' : [':LspRestart', 'Restart LSP Server'],
   \   's' : [':LspStart', 'Start LSP Server'],
   \   'x' : [':LspStop', 'Stop LSP Server'],
+  \   'h' : [':call chansend(g:last_terminal_chan_id, ":r\<cr>")', 'Recompile in GHCI - send :r to the terminal'],
+  \   'p' : [':call chansend(g:last_terminal_chan_id, "grunt\<cr>")', 'Recompile Purescript - send grunt to the terminal'],
   \   },
   \ 'o' : {
   \   'name' : '+organize',
@@ -468,3 +470,11 @@ augroup InitDotVimLSP
 augroup END
 
 " END lsp related config
+"
+"
+
+augroup Terminal
+  au!
+  au TermOpen * let g:last_terminal_chan_id = b:terminal_job_id
+augroup END
+
