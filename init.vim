@@ -286,11 +286,11 @@ function! init#references()
 endfunction
 
 function! init#manual_show_error_popup()
-  :lua vim.lsp.diagnostic.show_line_diagnostics({show_header = false, focusable = true})
+  :lua vim.diagnostic.open_float({show_header = false, focusable = true})
 endfunction
 
 function! init#auto_show_error_popup()
-  :lua vim.lsp.diagnostic.show_line_diagnostics({show_header = false, focusable = false})
+  :lua vim.diagnostic.open_float({show_header = false, focusable = false})
 endfunction
 
 " vim magit installs a default binding that we prefer not to show. Unmapping
