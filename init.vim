@@ -148,6 +148,18 @@ endfunction
 
 command! -nargs=0 GitBlame call s:GitBlame()
 
+"
+" Command to find files from the current buffer's directory and below.
+" A scoped find_files
+"
+function BufferFileBrowse()
+lua <<LUA
+  local file_dirname = vim.fn.expand "%:h:p"
+  require("telescope.builtin").file_browser { cwd = file_dirname }
+LUA
+endfunction
+
+
 let mapleader=" "
 
 " These mappings cannot be configured via which-key because it an incomplete
@@ -206,6 +218,7 @@ let g:which_key_map = {
   \   },
   \ 'f' : {
   \   'name' : '+file',
+  \   'b' : [':call BufferFileBrowse()', 'Open the Telescope file browser from the point of the current buffer.'],
   \   's' : [':write', 'Save the current file'],
   \   'S' : [':wall', 'Save all open current file'],
   \   'r' : [':Telescope oldfiles', 'Switch to a recently opened file'],
