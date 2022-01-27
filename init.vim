@@ -7,37 +7,37 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'scrooloose/nerdtree', { 'commit': '6188c5e' }
+Plug 'scrooloose/nerdtree', { 'commit': 'eed488b' }
 
-Plug 'neomake/neomake', { 'commit': '4cc1462' }
+Plug 'neomake/neomake', { 'commit': '8df8761' }
 
 Plug 'mileszs/ack.vim', { 'commit': '36e40f9' }
 
-Plug 'flazz/vim-colorschemes', { 'commit': 'eab3157' }
+Plug 'flazz/vim-colorschemes', { 'commit': 'fd8f122' }
 
-Plug 'neovimhaskell/haskell-vim', { 'commit': 'a5302e0' }
+Plug 'neovimhaskell/haskell-vim', { 'commit': 'f35d022' }
 
-Plug 'raichoo/purescript-vim', { 'commit': 'ab8547ce' }
+Plug 'purescript-contrib/purescript-vim', { 'commit': 'd493b57' }
 
-Plug 'fatih/vim-go', { 'commit': '8575d9e' }
+Plug 'fatih/vim-go', { 'commit': '8dfeded' }
 
-Plug 'ElmCast/elm-vim', { 'commit': 'ae53153' }
+Plug 'ElmCast/elm-vim', { 'commit': '4b71fac' }
 
-Plug 'vmchale/dhall-vim', { 'commit': '77d1c16' }
+Plug 'vmchale/dhall-vim', { 'commit': '68500ef' }
 
-Plug 'sbdchd/neoformat', { 'commit': '4dba93d' }
+Plug 'sbdchd/neoformat', { 'commit': '0d665b0' }
 
-Plug 'jreybert/vimagit', { 'commit': '85c25ff' }
+Plug 'jreybert/vimagit', { 'commit': 'fb71060' }
 
-Plug 'tpope/vim-surround', { 'commit': 'e49d6c2' }
+Plug 'tpope/vim-surround', { 'commit': 'aeb9332' }
 
-Plug 'tpope/vim-repeat', { 'commit': '8106e14' }
+Plug 'tpope/vim-repeat', { 'commit': '24afe92' }
 
-Plug 'gcmt/taboo.vim', { 'commit': '1367baf' }
+Plug 'gcmt/taboo.vim', { 'commit': 'caf9481' }
 
-Plug 'nicwest/vim-http', { 'commit': '99d3edf' }
+Plug 'nicwest/vim-http', { 'commit': 'e642fb9' }
 
-Plug 'liuchengxu/vim-which-key', { 'commit': 'c5322b2' }
+Plug 'liuchengxu/vim-which-key', { 'commit': '165772f' }
 
 Plug 'dag/vim-fish', { 'commit': '50b95cb' }
 
@@ -46,15 +46,17 @@ Plug 'godlygeek/tabular', { 'commit': '339091a' }
 Plug 'neovim/nvim-lspconfig', { 'commit': '4bcc485' }
 
 " BEGIN telescope dependencies
-Plug 'nvim-lua/popup.nvim', { 'commit': '5e3bece' }
-Plug 'nvim-lua/plenary.nvim', { 'commit': 'd897b4d' }
+Plug 'nvim-lua/popup.nvim', { 'commit': 'b7404d3' }
+Plug 'nvim-lua/plenary.nvim', { 'commit': '563d9f6' }
 " END telescope dependencies
 
-Plug 'nvim-telescope/telescope.nvim', { 'commit': 'b742c50' }
+Plug 'nvim-telescope/telescope.nvim', { 'commit': '0011b11' }
 
-Plug 'hrsh7th/nvim-compe', { 'commit': '73529ce' }
+Plug 'nvim-telescope/telescope-file-browser.nvim', { 'commit': 'e65a567' }
 
-Plug 'dyng/ctrlsf.vim', { 'commit': '51c5b28' }
+Plug 'hrsh7th/nvim-compe', { 'commit': 'd186d73' }
+
+Plug 'dyng/ctrlsf.vim', { 'commit': '2536895' }
 
 
 call plug#end()
@@ -148,6 +150,10 @@ endfunction
 
 command! -nargs=0 GitBlame call s:GitBlame()
 
+lua <<LUA
+require('telescope').load_extension('file_browser')
+LUA
+
 "
 " Command to find files from the current buffer's directory and below.
 " A scoped find_files
@@ -155,7 +161,7 @@ command! -nargs=0 GitBlame call s:GitBlame()
 function BufferFileBrowse()
 lua <<LUA
   local file_dirname = vim.fn.expand "%:h:p"
-  require("telescope.builtin").file_browser { cwd = file_dirname }
+  require("telescope").extensions.file_browser.file_browser { path = file_dirname }
 LUA
 endfunction
 
