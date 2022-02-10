@@ -295,10 +295,6 @@ function! init#manual_show_error_popup()
   :lua vim.diagnostic.open_float({show_header = false, focusable = true})
 endfunction
 
-function! init#auto_show_error_popup()
-  :lua vim.diagnostic.open_float({show_header = false, focusable = false})
-endfunction
-
 " vim magit installs a default binding that we prefer not to show. Unmapping
 " it in this file doesn't appear to work when the file is loaded the first
 " time (though it does unmap if you load it again)
@@ -483,10 +479,6 @@ else
 endif
 
 set updatetime=300
-
-augroup InitDotVimLSP
-  autocmd CursorHold * call init#auto_show_error_popup()
-augroup END
 
 " END lsp related config
 "
