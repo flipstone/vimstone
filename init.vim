@@ -246,6 +246,9 @@ let g:which_key_map = {
   \   'x' : [':LspStop', 'Stop LSP Server'],
   \   'h' : [':call chansend(g:last_terminal_chan_id, ":r\<cr>")', 'Recompile in GHCI - send :r to the terminal'],
   \   'p' : [':call chansend(g:last_terminal_chan_id, "grunt\<cr>")', 'Recompile Purescript - send grunt to the terminal'],
+  \   'j' : {
+  \      'e' : ['ToggleAutoShowErrorPopup()', 'Toggle error auto-popup'],
+  \      },
   \   },
   \ 'o' : {
   \   'name' : '+organize',
@@ -295,8 +298,20 @@ function! init#manual_show_error_popup()
   :lua vim.diagnostic.open_float({show_header = false, focusable = true})
 endfunction
 
+let g:auto_show_error_popup=1
+
+function! ToggleAutoShowErrorPopup()
+  if g:auto_show_error_popup
+    let g:auto_show_error_popup=0
+  else
+    let g:auto_show_error_popup=1
+  endif
+endfunction
+
 function! init#auto_show_error_popup()
-  :lua vim.diagnostic.open_float({show_header = false, focusable = false})
+  if g:auto_show_error_popup
+    :lua vim.diagnostic.open_float({show_header = false, focusable = false})
+  endif
 endfunction
 
 " vim magit installs a default binding that we prefer not to show. Unmapping
