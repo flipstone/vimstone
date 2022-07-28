@@ -1,15 +1,19 @@
 let s:current_filename=expand("<sfile>")
 let s:truecolor=($COLORTERM == "truecolor")
 
+" Allow shells started within nvim to detect the server surrounding them
+" (e.g. for nvr)
+let $NVIM_LISTEN_ADDRESS=v:servername
+
 if s:truecolor
   set termguicolors
 endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'scrooloose/nerdtree', { 'commit': 'eed488b' }
+Plug 'kyazdani42/nvim-tree.lua', { 'commit': '2928f8f' }
 
-Plug 'neomake/neomake', { 'commit': '8df8761' }
+Plug 'neomake/neomake', { 'commit': '0556893' }
 
 Plug 'mileszs/ack.vim', { 'commit': '36e40f9' }
 
@@ -17,19 +21,19 @@ Plug 'flazz/vim-colorschemes', { 'commit': 'fd8f122' }
 
 Plug 'neovimhaskell/haskell-vim', { 'commit': 'f35d022' }
 
-Plug 'purescript-contrib/purescript-vim', { 'commit': 'd493b57' }
+Plug 'purescript-contrib/purescript-vim', { 'commit': 'af5fae0' }
 
-Plug 'fatih/vim-go', { 'commit': '8dfeded' }
+Plug 'fatih/vim-go', { 'commit': '7ec0a19' }
 
 Plug 'ElmCast/elm-vim', { 'commit': '4b71fac' }
 
 Plug 'vmchale/dhall-vim', { 'commit': '68500ef' }
 
-Plug 'sbdchd/neoformat', { 'commit': '0d665b0' }
+Plug 'sbdchd/neoformat', { 'commit': '892be03' }
 
-Plug 'jreybert/vimagit', { 'commit': 'fb71060' }
+Plug 'jreybert/vimagit', { 'commit': '308650d' }
 
-Plug 'tpope/vim-surround', { 'commit': 'aeb9332' }
+Plug 'tpope/vim-surround', { 'commit': 'bf3480d' }
 
 Plug 'tpope/vim-repeat', { 'commit': '24afe92' }
 
@@ -37,26 +41,30 @@ Plug 'gcmt/taboo.vim', { 'commit': 'caf9481' }
 
 Plug 'nicwest/vim-http', { 'commit': 'e642fb9' }
 
-Plug 'liuchengxu/vim-which-key', { 'commit': '165772f' }
+Plug 'liuchengxu/vim-which-key', { 'commit': '654dfc1' }
 
 Plug 'dag/vim-fish', { 'commit': '50b95cb' }
 
 Plug 'godlygeek/tabular', { 'commit': '339091a' }
 
-Plug 'neovim/nvim-lspconfig', { 'commit': '4bcc485' }
+Plug 'neovim/nvim-lspconfig', { 'commit': '99596a8' }
 
 " BEGIN telescope dependencies
 Plug 'nvim-lua/popup.nvim', { 'commit': 'b7404d3' }
-Plug 'nvim-lua/plenary.nvim', { 'commit': '563d9f6' }
+Plug 'nvim-lua/plenary.nvim', { 'commit': '986ad71' }
 " END telescope dependencies
 
-Plug 'nvim-telescope/telescope.nvim', { 'commit': '0011b11' }
+Plug 'nvim-telescope/telescope.nvim', { 'commit': 'b5833a6' }
 
-Plug 'nvim-telescope/telescope-file-browser.nvim', { 'commit': 'e65a567' }
+Plug 'nvim-telescope/telescope-file-browser.nvim', { 'commit': 'c30fcb6' }
 
-Plug 'hrsh7th/nvim-compe', { 'commit': 'd186d73' }
+Plug 'hrsh7th/cmp-nvim-lsp', { 'commit': 'affe808' }
+Plug 'hrsh7th/cmp-buffer', { 'commit': '62fc67a' }
+Plug 'hrsh7th/cmp-path', { 'commit': '447c87c' }
+Plug 'hrsh7th/cmp-cmdline', { 'commit': 'c36ca4b' }
+Plug 'hrsh7th/nvim-cmp', { 'commit': '89df2cb' }
 
-Plug 'dyng/ctrlsf.vim', { 'commit': '2536895' }
+Plug 'dyng/ctrlsf.vim', { 'commit': '9eb13ad' }
 
 
 call plug#end()
@@ -65,29 +73,116 @@ syntax on
 filetype plugin indent on
 
 " BEGIN nvim-compe related config
-set completeopt=menuone,noselect
+set completeopt=menu,menuone,noselect
 
-let g:compe = {}
+lua <<EOF
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
 
-let g:compe.source = {}
-let g:compe.source.path = v:true
-let g:compe.source.buffer = v:true
-let g:compe.source.calc = v:true
-let g:compe.source.nvim_lsp = v:true
-let g:compe.source.nvim_lua = v:true
-let g:compe.source.vsnip = v:false
-let g:compe.source.ultisnips = v:false
-let g:compe.source.luasnip = v:false
-let g:compe.source.emoji = v:false
+  cmp.setup({
+    snippet = {
+      expand = function(args)
+        -- we leave this empty because we don't use snippets
+      end,
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+    }, {
+      { name = 'buffer' },
+    }),
+    view = {
+      entries = {
+        name = 'custom',
+        selection_order = 'near_cursor'
+      }
+    },
+  })
 
-inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
-inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+  -- Set configuration for specific filetype.
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+    }, {
+      { name = 'buffer' },
+    })
+  })
 
-inoremap <silent><expr> <C-Space> compe#complete()
-inoremap <silent><expr> <CR>      compe#confirm('<CR>')
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+EOF
 
 
-" END nvim-compe related config
+" END nvim-cmp related config
+
+" BEGIN lsp related config
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
+set updatetime=300
+
+lua <<EOF
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+  require('lspconfig')['hls'].setup {
+    cmd = { "./.vim/haskell-language-server-wrapper", "--lsp" },
+    flags = { debounce_text_changes = 500, },
+    settings = {
+      haskell = {
+        plugin = {
+          ["ghcide-completions"] = {
+            config = {
+              snippetsOn = false,
+              autoExtendOn = false,
+            }
+          }
+        }
+      }
+    },
+    capabilities = capabilities,
+  }
+
+  vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+    vim.lsp.diagnostic.on_publish_diagnostics, {
+      virtual_text = false,
+      underline = true,
+      signs = true,
+    }
+  )
+EOF
+
+" END lsp related config
+
+
 
 "
 " Provide a way to reload the vim setup nicely. Vim
@@ -190,9 +285,11 @@ let g:which_key_map = {
   \   'l' : [':Telescope live_grep', 'Live search with preview via :Telescope'],
   \   },
   \ 't' : {
-  \   'name' : '+nerdtree',
-  \   't' : [ ':NERDTreeToggle', 'toggle display of NERDTree'],
-  \   'f' : [ ':NERDTreeFind', 'find current file in the NERDTree window'],
+  \   'name' : '+filetree',
+  \   't' : [ ':NvimTreeToggle', 'toggle display of the file tree'],
+  \   'f' : [ ':NvimTreeFindFile', 'find current file in the file tree'],
+  \   'o' : [ ':NvimTreeFocus', 'open or focus the file tree'],
+  \   'c' : [ ':NvimTreeClose', 'close file tree'],
   \   },
   \ 'g' : {
   \   'name' : '+git',
@@ -238,7 +335,6 @@ let g:which_key_map = {
   \   'a' : ['init#code_action()', 'Open the code action menu'],
   \   'g' : ['init#go_to_definition()', 'Go to definition'],
   \   'd' : ['init#show_documentation()', 'Show documentation'],
-  \   'e' : ['init#manual_show_error_popup()', 'Show or focus error popup'],
   \   'r' : ['init#references()', 'Show references'],
   \   'i' : [':LspInfo', 'Show LSP Status Info'],
   \   't' : [':LspRestart', 'Restart LSP Server'],
@@ -246,6 +342,17 @@ let g:which_key_map = {
   \   'x' : [':LspStop', 'Stop LSP Server'],
   \   'h' : [':call chansend(g:last_terminal_chan_id, ":r\<cr>")', 'Recompile in GHCI - send :r to the terminal'],
   \   'p' : [':call chansend(g:last_terminal_chan_id, "grunt\<cr>")', 'Recompile Purescript - send grunt to the terminal'],
+  \   },
+  \ 'e' : {
+  \   'name': 'errors (in code)',
+  \   'l' : ['init#error_open_float_line()', 'Show or focus error popup for current line'],
+  \   'b' : ['init#error_open_float_buffer()', 'Show or focus error popup for entire buffer'],
+  \   'o' : ['init#error_open_list()', 'Open errors in location list'],
+  \   'c' : [':lclose', 'Close the error locations list'],
+  \   'n' : ['init#error_move_next()', 'Move to the next error'],
+  \   'p' : ['init#error_move_prev()', 'Move to the previous error'],
+  \   'h' : ['init#error_hide()', 'Hide errors rendered in buffer'],
+  \   's' : ['init#error_show()', 'Show (unhide) errors rendered in buffer'],
   \   },
   \ 'o' : {
   \   'name' : '+organize',
@@ -291,8 +398,32 @@ function! init#references()
   :lua vim.lsp.buf.references()
 endfunction
 
-function! init#manual_show_error_popup()
-  :lua vim.diagnostic.open_float({show_header = false, focusable = true})
+function! init#error_open_float_line()
+  :lua vim.diagnostic.open_float({scope = 'line', show_header = false, focusable = true, focus = true})
+endfunction
+
+function! init#error_open_float_buffer()
+  :lua vim.diagnostic.open_float({scope = 'buffer', show_header = false, focusable = true, focus = true})
+endfunction
+
+function! init#error_open_list()
+  :lua vim.diagnostic.setloclist()
+endfunction
+
+function! init#error_move_next()
+  :lua vim.diagnostic.goto_next({float = false})
+endfunction
+
+function! init#error_move_prev()
+  :lua vim.diagnostic.goto_prev({float = false})
+endfunction
+
+function! init#error_hide()
+  :lua vim.diagnostic.hide()
+endfunction
+
+function! init#error_show()
+  :lua vim.diagnostic.show()
 endfunction
 
 " vim magit installs a default binding that we prefer not to show. Unmapping
@@ -452,37 +583,53 @@ if s:truecolor || has('gui_running')
   let g:terminal_color_15='#ffffff' " white
 endif
 
-" BEGIN lsp related config
-
 lua <<EOF
-require'lspconfig'.hls.setup{
-  cmd = { "./.vim/haskell-language-server-wrapper", "--lsp" },
-  flags = { debounce_text_changes = 500, }
-}
-
-vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
-  vim.lsp.diagnostic.on_publish_diagnostics, {
-    virtual_text = false,
-    underline = true,
-    signs = true,
+require("nvim-tree").setup({
+  respect_buf_cwd = true,
+  diagnostics = {
+    enable = true,
+    show_on_dirs = true,
+    icons = { hint = "H", info = "I", warning = "W", error = "E" },
+  },
+  renderer = {
+    icons = {
+      symlink_arrow = " ➛ ",
+      git_placement = "after",
+      padding = "",
+      show = {
+        file = false,
+        folder = false,
+        folder_arrow = true,
+        git = true,
+      },
+      glyphs = {
+        default = "",
+        symlink = "s",
+        bookmark = "b",
+        folder = {
+          arrow_closed = "▶",
+          arrow_open = "▼",
+          default = "",
+          open = "",
+          empty = "e",
+          empty_open = "e",
+          symlink = "s",
+          symlink_open = "s",
+        },
+        git = {
+          unstaged = "•",
+          staged = "•",
+          unmerged = "•",
+          renamed = "•",
+          untracked = "•",
+          deleted = "•",
+          ignored = "•",
+        },
+      },
+    },
   }
-)
+})
 EOF
-
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-if has("patch-8.1.1564")
-  " Recently vim can merge signcolumn and number column into one
-  set signcolumn=number
-else
-  set signcolumn=yes
-endif
-
-set updatetime=300
-
-" END lsp related config
-"
-"
 
 augroup Terminal
   au!
