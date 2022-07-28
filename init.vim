@@ -158,6 +158,7 @@ lua <<EOF
     flags = { debounce_text_changes = 500, },
     settings = {
       haskell = {
+        formattingProvider = "fourmolu",
         plugin = {
           ["ghcide-completions"] = {
             config = {
@@ -333,6 +334,7 @@ let g:which_key_map = {
   \ 'c' : {
   \   'name' : '+code (lsp)',
   \   'a' : ['init#code_action()', 'Open the code action menu'],
+  \   'f' : ['init#code_format()', 'Format the file via the language server'],
   \   'g' : ['init#go_to_definition()', 'Go to definition'],
   \   'd' : ['init#show_documentation()', 'Show documentation'],
   \   'r' : ['init#references()', 'Show references'],
@@ -384,6 +386,10 @@ endfunction
 
 function! init#code_action()
   :lua vim.lsp.buf.code_action()
+endfunction
+
+function! init#code_format()
+  :lua vim.lsp.buf.formatting()
 endfunction
 
 function! init#go_to_definition()
