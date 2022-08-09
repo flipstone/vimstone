@@ -643,3 +643,9 @@ augroup Terminal
   au TermOpen * let g:last_terminal_chan_id = b:terminal_job_id
 augroup END
 
+augroup Git
+  au!
+  " auto-delete git command buffers when they are hidden, both for cleanliness
+  " and to allow :q to work as expected with neovim-remote (nvr)
+  au FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
+augroup END
