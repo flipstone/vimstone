@@ -10,7 +10,7 @@ An unassuming Neovim distribution used by Flipstone and friends
 
 * Clone the repo: `git clone git@github.com:flipstone/vimstone.git ~/.config/nvim`
 * Run `nvim`
-* Inside `nvim`, run `:PlugInstall`, then run `:SourceInitFile`
+  * Answer `y` (or just hit enter) when it asks if you want to install plugins
 
 ## Upgrading
 

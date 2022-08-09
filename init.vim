@@ -71,6 +71,16 @@ Plug 'dyng/ctrlsf.vim', { 'commit': '9eb13ad' }
 
 call plug#end()
 
+if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  let choice = confirm("Some plugins are not installed. Install them now?", "&yes\n&no", 1)
+
+  if choice == 1
+    PlugInstall --sync
+  else
+    echo "You may see errors due to configuration that depends on plugins"
+  endif
+endif
+
 syntax on
 filetype plugin indent on
 
@@ -651,3 +661,4 @@ augroup Git
   " and to allow :q to work as expected with neovim-remote (nvr)
   au FileType gitcommit,gitrebase,gitconfig set bufhidden=delete
 augroup END
+
