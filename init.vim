@@ -3,7 +3,9 @@ let s:truecolor=($COLORTERM == "truecolor")
 
 " Allow shells started within nvim to detect the server surrounding them
 " (e.g. for nvr)
-let $NVIM_LISTEN_ADDRESS=v:servername
+if executable('nvr')
+  let $EDITOR='nvr -cc split --remote-wait --servername ' . v:servername
+endif
 
 if s:truecolor
   set termguicolors
