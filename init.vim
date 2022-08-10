@@ -166,12 +166,29 @@ lua <<EOF
   -- Setup lspconfig.
   local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
 
+  -- Apply any HLS config settings that should be adjusted based on
+  -- the project directory it is being launched in
+  function customizeHLSForProject (config, rootDir)
+    -- If there is a local language server script, use it rather than the
+    -- default one from the PATH
+    local localHLSPath = rootDir .. "/.vim/haskell-language-server-wrapper"
+    if vim.fn.executable(localHLSPath) == 1 then
+      config.cmd = { localHLSPath, "--lsp" }
+    end
+
+    -- if the project is configured for fourmolu formatting, indicate as
+    -- such to HLS
+    if vim.fn.filereadable(rootDir .. "/fourmolu.yaml") == 1 then
+      config.settings.haskell.formattingProvider = "fourmolu"
+    end
+  end
+
   require('lspconfig')['hls'].setup {
-    cmd = { "./.vim/haskell-language-server-wrapper", "--lsp" },
+    on_new_config = customizeHLSForProject,
+    cmd = { "haskell-language-server-wrapper", "--lsp" },
     flags = { debounce_text_changes = 500, },
     settings = {
       haskell = {
-        formattingProvider = "fourmolu",
         plugin = {
           ["ghcide-completions"] = {
             config = {
