@@ -68,6 +68,7 @@ Plug 'hrsh7th/nvim-cmp', { 'commit': '89df2cb' }
 
 Plug 'dyng/ctrlsf.vim', { 'commit': '9eb13ad' }
 
+Plug 'mbbill/undotree', { 'commit': 'bfc9b06' }
 
 call plug#end()
 
@@ -356,6 +357,7 @@ let g:which_key_map = {
   \   's' : [':write', 'Save the current file'],
   \   'S' : [':wall', 'Save all open current file'],
   \   'r' : [':Telescope oldfiles', 'Switch to a recently opened file'],
+  \   'u' : [':UndotreeToggle', 'Toggle the undotree view'],
   \   },
   \ 'b' : {
   \   'name' : '+buffer',
