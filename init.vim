@@ -51,6 +51,8 @@ Plug 'godlygeek/tabular', { 'commit': '339091a' }
 
 Plug 'neovim/nvim-lspconfig', { 'commit': '9d4b8d3' }
 
+Plug 'hashivim/vim-terraform', { 'commit': 'f0b17ac' }
+
 " BEGIN telescope dependencies
 Plug 'nvim-lua/popup.nvim', { 'commit': 'b7404d3' }
 Plug 'nvim-lua/plenary.nvim', { 'commit': '986ad71' }
