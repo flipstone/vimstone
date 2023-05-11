@@ -219,6 +219,7 @@ EOF
 " BEGIN taboo related config
 let g:taboo_tab_format=" |%f%m%I|"
 let g:taboo_renamed_tab_format=" |%l%m%I|"
+set sessionoptions+=tabpages,globals
 
 " END taboo related config
 
