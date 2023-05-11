@@ -216,7 +216,11 @@ EOF
 
 " END lsp related config
 
+" BEGIN taboo related config
+let g:taboo_tab_format=" |%f%m%I|"
+let g:taboo_renamed_tab_format=" |%l%m%I|"
 
+" END taboo related config
 
 "
 " Provide a way to reload the vim setup nicely. Vim
