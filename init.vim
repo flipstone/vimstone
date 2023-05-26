@@ -13,7 +13,15 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'kyazdani42/nvim-tree.lua', { 'commit': '2928f8f' }
+Plug 'nvim-neo-tree/neo-tree.nvim', { 'commit': 'v2.42' }
+
+" BEGIN neo-tree dependencies
+"
+Plug 'MunifTanjim/nui.nvim', { 'commit': '698e758' }
+Plug 's1n7ax/nvim-window-picker', { 'commit': 'v1.5' }
+
+" also plenary, which is installed below in telescope dependencies
+" END
 
 Plug 'neomake/neomake', { 'commit': '0556893' }
 
@@ -55,7 +63,7 @@ Plug 'hashivim/vim-terraform', { 'commit': 'f0b17ac' }
 
 " BEGIN telescope dependencies
 Plug 'nvim-lua/popup.nvim', { 'commit': 'b7404d3' }
-Plug 'nvim-lua/plenary.nvim', { 'commit': '986ad71' }
+Plug 'nvim-lua/plenary.nvim', { 'commit': '986ad71' } " also a neo-tree-dependencies
 " END telescope dependencies
 
 Plug 'nvim-telescope/telescope.nvim', { 'commit': 'b5833a6' }
@@ -86,6 +94,50 @@ endif
 
 syntax on
 filetype plugin indent on
+
+lua <<EOF
+require('window-picker').setup()
+
+vim.cmd([[ let g:neo_tree_remove_legacy_commands = 1 ]])
+
+require("neo-tree").setup({
+  window = {
+    mappings = {
+     ["<space>"] = "none"
+    }
+  },
+  default_component_configs = {
+    icon = {
+      folder_closed = "📁",
+      folder_open = "📂",
+      folder_empty = "📁(e)",
+      -- The next two settings are only a fallback, if you use nvim-web-devicons and configure default icons there
+      -- then these will never be used.
+      default = "",
+      highlight = "NeoTreeFileIcon"
+    },
+    modified = {
+      symbol = "[+]",
+      highlight = "NeoTreeModified",
+    },
+    git_status = {
+      symbols = {
+        -- Change type
+        added     = "✚", -- or "✚", but this is redundant info if you use git_status_colors on the name
+        modified  = "~", -- or "", but this is redundant info if you use git_status_colors on the name
+        deleted   = "✖",-- this can only be used in the git_status source
+        renamed   = "🏷",-- this can only be used in the git_status source
+        -- Status type
+        untracked = "",
+        ignored   = "👻",
+        unstaged  = "☐",
+        staged    = "☑",
+        conflict  = "💥",
+      }
+    }
+  }
+})
+EOF
 
 " BEGIN nvim-compe related config
 set completeopt=menu,menuone,noselect
@@ -325,10 +377,10 @@ let g:which_key_map = {
   \   },
   \ 't' : {
   \   'name' : '+filetree',
-  \   't' : [ ':NvimTreeToggle', 'toggle display of the file tree'],
-  \   'f' : [ ':NvimTreeFindFile', 'find current file in the file tree'],
-  \   'o' : [ ':NvimTreeFocus', 'open or focus the file tree'],
-  \   'c' : [ ':NvimTreeClose', 'close file tree'],
+  \   't' : [ ':Neotree toggle dir=.', 'toggle display of the file tree'],
+  \   'f' : [ ':Neotree reveal', 'find current file in the file tree'],
+  \   'o' : [ ':Neotree focus', 'open or focus the file tree'],
+  \   'c' : [ ':Neotree close', 'close file tree'],
   \   },
   \ 'g' : {
   \   'name' : '+git',
@@ -627,54 +679,6 @@ if s:truecolor || has('gui_running')
   let g:terminal_color_14='#54ced6' " cyan
   let g:terminal_color_15='#ffffff' " white
 endif
-
-lua <<EOF
-require("nvim-tree").setup({
-  respect_buf_cwd = true,
-  diagnostics = {
-    enable = true,
-    show_on_dirs = true,
-    icons = { hint = "H", info = "I", warning = "W", error = "E" },
-  },
-  renderer = {
-    icons = {
-      symlink_arrow = " ➛ ",
-      git_placement = "after",
-      padding = "",
-      show = {
-        file = false,
-        folder = false,
-        folder_arrow = true,
-        git = true,
-      },
-      glyphs = {
-        default = "",
-        symlink = "s",
-        bookmark = "b",
-        folder = {
-          arrow_closed = "▶",
-          arrow_open = "▼",
-          default = "",
-          open = "",
-          empty = "e",
-          empty_open = "e",
-          symlink = "s",
-          symlink_open = "s",
-        },
-        git = {
-          unstaged = "•",
-          staged = "•",
-          unmerged = "•",
-          renamed = "•",
-          untracked = "•",
-          deleted = "•",
-          ignored = "•",
-        },
-      },
-    },
-  }
-})
-EOF
 
 augroup Terminal
   au!
