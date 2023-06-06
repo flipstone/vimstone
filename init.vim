@@ -135,6 +135,9 @@ require("neo-tree").setup({
         conflict  = "💥",
       }
     }
+  },
+  filesystem = {
+    bind_to_cwd = false
   }
 })
 EOF
