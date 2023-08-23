@@ -33,8 +33,6 @@ Plug 'neovimhaskell/haskell-vim', { 'commit': 'f35d022' }
 
 Plug 'purescript-contrib/purescript-vim', { 'commit': 'af5fae0' }
 
-Plug 'fatih/vim-go', { 'commit': '7ec0a19' }
-
 Plug 'ElmCast/elm-vim', { 'commit': '4b71fac' }
 
 Plug 'vmchale/dhall-vim', { 'commit': '68500ef' }
