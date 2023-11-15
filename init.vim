@@ -13,17 +13,17 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'nvim-neo-tree/neo-tree.nvim', { 'commit': 'v2.42' }
+Plug 'nvim-neo-tree/neo-tree.nvim', { 'commit': '3.12' }
 
 " BEGIN neo-tree dependencies
 "
-Plug 'MunifTanjim/nui.nvim', { 'commit': '698e758' }
-Plug 's1n7ax/nvim-window-picker', { 'commit': 'v1.5' }
+Plug 'MunifTanjim/nui.nvim', { 'commit': '0.2.0' }
+Plug 's1n7ax/nvim-window-picker', { 'commit': 'v2.0.2' }
 
 " also plenary, which is installed below in telescope dependencies
 " END
 
-Plug 'neomake/neomake', { 'commit': '0556893' }
+Plug 'neomake/neomake', { 'commit': '584f882' }
 
 Plug 'mileszs/ack.vim', { 'commit': '36e40f9' }
 
@@ -31,52 +31,52 @@ Plug 'flazz/vim-colorschemes', { 'commit': 'fd8f122' }
 
 Plug 'neovimhaskell/haskell-vim', { 'commit': 'f35d022' }
 
-Plug 'purescript-contrib/purescript-vim', { 'commit': 'af5fae0' }
+Plug 'purescript-contrib/purescript-vim', { 'commit': '8234835' }
 
 Plug 'ElmCast/elm-vim', { 'commit': '4b71fac' }
 
 Plug 'vmchale/dhall-vim', { 'commit': '68500ef' }
 
-Plug 'sbdchd/neoformat', { 'commit': '892be03' }
+Plug 'sbdchd/neoformat', { 'commit': 'e5fe7e8' }
 
 Plug 'jreybert/vimagit', { 'commit': '308650d' }
 
-Plug 'tpope/vim-surround', { 'commit': 'bf3480d' }
+Plug 'tpope/vim-surround', { 'commit': '3d188ed' }
 
 Plug 'tpope/vim-repeat', { 'commit': '24afe92' }
 
 Plug 'gcmt/taboo.vim', { 'commit': 'caf9481' }
 
-Plug 'nicwest/vim-http', { 'commit': 'e642fb9' }
+Plug 'nicwest/vim-http', { 'commit': '87ba1fa' }
 
-Plug 'liuchengxu/vim-which-key', { 'commit': '654dfc1' }
+Plug 'liuchengxu/vim-which-key', { 'commit': '08cf520' }
 
 Plug 'dag/vim-fish', { 'commit': '50b95cb' }
 
 Plug 'godlygeek/tabular', { 'commit': '339091a' }
 
-Plug 'neovim/nvim-lspconfig', { 'commit': '9d4b8d3' }
+Plug 'neovim/nvim-lspconfig', { 'commit': 'd5d7412' }
 
-Plug 'hashivim/vim-terraform', { 'commit': 'f0b17ac' }
+Plug 'hashivim/vim-terraform', { 'commit': 'd37ae7e' }
 
 " BEGIN telescope dependencies
 Plug 'nvim-lua/popup.nvim', { 'commit': 'b7404d3' }
-Plug 'nvim-lua/plenary.nvim', { 'commit': '986ad71' } " also a neo-tree-dependencies
+Plug 'nvim-lua/plenary.nvim', { 'commit': '5001291' } " also a neo-tree-dependencies
 " END telescope dependencies
 
-Plug 'nvim-telescope/telescope.nvim', { 'commit': 'b5833a6' }
+Plug 'nvim-telescope/telescope.nvim', { 'commit': '0.1.4' }
 
-Plug 'nvim-telescope/telescope-file-browser.nvim', { 'commit': 'c30fcb6' }
+Plug 'nvim-telescope/telescope-file-browser.nvim', { 'commit': 'da2a20c' }
 
-Plug 'hrsh7th/cmp-nvim-lsp', { 'commit': 'affe808' }
-Plug 'hrsh7th/cmp-buffer', { 'commit': '62fc67a' }
-Plug 'hrsh7th/cmp-path', { 'commit': '447c87c' }
-Plug 'hrsh7th/cmp-cmdline', { 'commit': 'c36ca4b' }
-Plug 'hrsh7th/nvim-cmp', { 'commit': '89df2cb' }
+Plug 'hrsh7th/cmp-nvim-lsp', { 'commit': '44b16d1' }
+Plug 'hrsh7th/cmp-buffer', { 'commit': '3022dbc' }
+Plug 'hrsh7th/cmp-path', { 'commit': '91ff86c' }
+Plug 'hrsh7th/cmp-cmdline', { 'commit': '8ee981b' }
+Plug 'hrsh7th/nvim-cmp', { 'commit': '0b751f6' }
 
-Plug 'dyng/ctrlsf.vim', { 'commit': '9eb13ad' }
+Plug 'dyng/ctrlsf.vim', { 'commit': '32236a8' }
 
-Plug 'mbbill/undotree', { 'commit': 'bfc9b06' }
+Plug 'mbbill/undotree', { 'commit': '36ff7ab' }
 
 call plug#end()
 
@@ -220,7 +220,7 @@ set updatetime=300
 
 lua <<EOF
   -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
   -- Apply any HLS config settings that should be adjusted based on
   -- the project directory it is being launched in
@@ -265,6 +265,9 @@ lua <<EOF
       signs = true,
     }
   )
+
+  -- Uncomment this if you prefer to turn off lsp logging altogether
+  --vim.lsp.set_log_level("off")
 EOF
 
 " END lsp related config
