@@ -78,6 +78,9 @@ Plug 'dyng/ctrlsf.vim', { 'commit': '32236a8' }
 
 Plug 'mbbill/undotree', { 'commit': '36ff7ab' }
 
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/nvim-treesitter-textobjects'
+
 call plug#end()
 
 if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
@@ -90,7 +93,7 @@ if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
   endif
 endif
 
-syntax on
+syntax off
 filetype plugin indent on
 
 lua <<EOF
@@ -139,6 +142,82 @@ require("neo-tree").setup({
   }
 })
 EOF
+
+" BEGIN tree-sitter related config
+lua <<EOF
+-- [[ Configure Treesitter ]]
+-- See `:help nvim-treesitter`
+-- Defer Treesitter setup after first render to improve startup time of 'nvim {filename}'
+vim.defer_fn(function()
+  require('nvim-treesitter.configs').setup {
+    -- Add languages to be installed here that you want installed for treesitter
+    ensure_installed = {
+      'bash',
+      'css',
+      'csv',
+      'go',
+      'haskell',
+      'html',
+      'javascript',
+      'json',
+      'lua',
+      'make',
+      'purescript',
+      'python',
+      'terraform',
+      'vim',
+      },
+
+    -- Autoinstall languages that are not installed. Defaults to false (but you can change for yourself!)
+    auto_install = false,
+
+    highlight = { enable = true },
+    indent = { enable = true },
+    incremental_selection = {
+      enable = true,
+      keymaps = {
+        init_selection = '<c-space>',
+        node_incremental = '<c-space>',
+      },
+    },
+    textobjects = {
+      select = {
+        enable = true,
+        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ['aa'] = '@parameter.outer',
+          ['ia'] = '@parameter.inner',
+          ['af'] = '@function.outer',
+          ['if'] = '@function.inner',
+          ['ac'] = '@class.outer',
+          ['ic'] = '@class.inner',
+          ['ao'] = '@comment.outer',
+          ['al'] = '@loop.outer',
+          ['il'] = '@loop.inner',
+        },
+      },
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          [']m'] = '@function.outer',
+        },
+        goto_next_end = {
+          [']M'] = '@function.outer',
+        },
+        goto_previous_start = {
+          ['[m'] = '@function.outer',
+        },
+        goto_previous_end = {
+          ['[M'] = '@function.outer',
+        },
+      },
+    },
+  }
+end, 0)
+EOF
+" END tree-sitter related config
 
 " BEGIN nvim-compe related config
 set completeopt=menu,menuone,noselect

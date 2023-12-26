@@ -32,3 +32,30 @@ to a mapping with a command attached.
 `:Tutor` is your friend! Run it to get a very basic introduction to vim.
 There's also a tutorial for Vimstone itself: `:Tutor vimstone`! It will help
 you get familiar with the specific plugin.
+
+### Tree-sitter
+
+#### Incremental select
+You can select surrounding code using `<control-space>`.
+
+For example, with this initial cursor position in normal mode:
+
+![](img/incr-1.png)
+
+The first key press will enter visual mode. A subsequent press will get you the following selection:
+
+![](img/incr-2.png)
+
+and after the next key press:
+
+![](img/incr-3.png)
+
+#### Text-objects
+
+| Text object | Start state      | Input | End state (outer variant) | Input | End state (inner variant) |
+| ----------- | ---------------- | ----- | ------------------------- | ----- | ------------------------- |
+| Parameter   | ![](img/par.png) | `caa` | ![](img/caa.png)          | `cia` | ![](img/cia.png)          |
+| Function    | ![](img/fun.png) | `caf` | ![](img/caf.png)          | `cif` | ![](img/cif.png)          |
+| Class       | ![](img/cls.png) | `cac` | ![](img/cac.png)          | `cic` | ![](img/cic.png)          |
+| Comment     | ![](img/cmt.png) | `cao` | ![](img/cao.png)          | N/A   | N/A                       |
+| Loop        | ![](img/lop.png) | `cal` | ![](img/cal.png)          | `cil` | ![](img/cil.png)          |
