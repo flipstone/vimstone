@@ -55,7 +55,7 @@ Plug 'dag/vim-fish', { 'commit': '50b95cb' }
 
 Plug 'godlygeek/tabular', { 'commit': '339091a' }
 
-Plug 'neovim/nvim-lspconfig', { 'commit': 'd5d7412' }
+Plug 'neovim/nvim-lspconfig', { 'commit': '796394f' }
 
 Plug 'hashivim/vim-terraform', { 'commit': 'd37ae7e' }
 
@@ -68,11 +68,11 @@ Plug 'nvim-telescope/telescope.nvim', { 'commit': '0.1.4' }
 
 Plug 'nvim-telescope/telescope-file-browser.nvim', { 'commit': 'da2a20c' }
 
-Plug 'hrsh7th/cmp-nvim-lsp', { 'commit': '44b16d1' }
+Plug 'hrsh7th/cmp-nvim-lsp', { 'commit': '5af77f5' }
 Plug 'hrsh7th/cmp-buffer', { 'commit': '3022dbc' }
 Plug 'hrsh7th/cmp-path', { 'commit': '91ff86c' }
 Plug 'hrsh7th/cmp-cmdline', { 'commit': '8ee981b' }
-Plug 'hrsh7th/nvim-cmp', { 'commit': '0b751f6' }
+Plug 'hrsh7th/nvim-cmp', { 'commit': '538e37b' }
 
 Plug 'dyng/ctrlsf.vim', { 'commit': '32236a8' }
 
@@ -220,7 +220,7 @@ set updatetime=300
 
 lua <<EOF
   -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
   -- Apply any HLS config settings that should be adjusted based on
   -- the project directory it is being launched in
