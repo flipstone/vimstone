@@ -1,5 +1,5 @@
 let s:current_filename=expand("<sfile>")
-let s:truecolor=($COLORTERM == "truecolor")
+let s:truecolor=1
 
 " Allow shells started within nvim to detect the server surrounding them
 " (e.g. for nvr)
@@ -27,7 +27,7 @@ Plug 'neomake/neomake', { 'commit': '584f882' }
 
 Plug 'mileszs/ack.vim', { 'commit': '36e40f9' }
 
-Plug 'flazz/vim-colorschemes', { 'commit': 'fd8f122' }
+Plug 'savq/melange-nvim', { 'commit': 'ca3444c' }
 
 Plug 'neovimhaskell/haskell-vim', { 'commit': 'f35d022' }
 
@@ -94,7 +94,7 @@ if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
 endif
 
 syntax off
-filetype plugin indent on
+filetype plugin indent off
 
 lua <<EOF
 require('window-picker').setup()
@@ -738,7 +738,7 @@ augroup END
 " silent! here suppresses errors about the colorscheme
 " missing so that we can run :PluginInstall the first
 " time without getting an error.
-silent! colorscheme jellybeans
+silent! colorscheme melange
 
 " Make the colors look nicer in the terminal, if supported.
 if s:truecolor || has('gui_running')
