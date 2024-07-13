@@ -13,12 +13,12 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'nvim-neo-tree/neo-tree.nvim', { 'commit': '3.12' }
+Plug 'nvim-neo-tree/neo-tree.nvim', { 'commit': '206241e' }
 
 " BEGIN neo-tree dependencies
 "
-Plug 'MunifTanjim/nui.nvim', { 'commit': '0.2.0' }
-Plug 's1n7ax/nvim-window-picker', { 'commit': 'v2.0.2' }
+Plug 'MunifTanjim/nui.nvim', { 'commit': '61574ce' }
+Plug 's1n7ax/nvim-window-picker', { 'commit': 'v2.0.3' }
 
 " also plenary, which is installed below in telescope dependencies
 " END
@@ -35,11 +35,11 @@ Plug 'purescript-contrib/purescript-vim', { 'commit': '8234835' }
 
 Plug 'ElmCast/elm-vim', { 'commit': '4b71fac' }
 
-Plug 'vmchale/dhall-vim', { 'commit': '68500ef' }
+Plug 'vmchale/dhall-vim', { 'commit': 'bd9fd99' }
 
 Plug 'sbdchd/neoformat', { 'commit': 'e5fe7e8' }
 
-Plug 'jreybert/vimagit', { 'commit': '308650d' }
+Plug 'jreybert/vimagit', { 'commit': 'fc7eda9' }
 
 Plug 'tpope/vim-surround', { 'commit': '3d188ed' }
 
@@ -49,15 +49,15 @@ Plug 'gcmt/taboo.vim', { 'commit': 'caf9481' }
 
 Plug 'nicwest/vim-http', { 'commit': '87ba1fa' }
 
-Plug 'liuchengxu/vim-which-key', { 'commit': '08cf520' }
+Plug 'liuchengxu/vim-which-key', { 'commit': '470cd19' }
 
 Plug 'dag/vim-fish', { 'commit': '50b95cb' }
 
-Plug 'godlygeek/tabular', { 'commit': '339091a' }
+Plug 'godlygeek/tabular', { 'commit': '12437cd' }
 
 Plug 'neovim/nvim-lspconfig', { 'commit': '796394f' }
 
-Plug 'hashivim/vim-terraform', { 'commit': 'd37ae7e' }
+Plug 'hashivim/vim-terraform', { 'commit': '24de93a' }
 
 " BEGIN telescope dependencies
 Plug 'nvim-lua/popup.nvim', { 'commit': 'b7404d3' }
