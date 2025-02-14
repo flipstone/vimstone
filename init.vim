@@ -92,6 +92,7 @@ endif
 
 syntax on
 filetype plugin indent on
+autocmd FileType go set noexpandtab
 
 lua <<EOF
 require('window-picker').setup()
