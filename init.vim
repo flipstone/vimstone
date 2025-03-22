@@ -13,12 +13,12 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'nvim-neo-tree/neo-tree.nvim', { 'commit': '94c8ec3' }
+Plug 'nvim-neo-tree/neo-tree.nvim', { 'commit': 'dda4c9e' }
 
 " BEGIN neo-tree dependencies
 "
 Plug 'MunifTanjim/nui.nvim', { 'commit': '61574ce' }
-Plug 's1n7ax/nvim-window-picker', { 'commit': 'v2.0.3' }
+Plug 's1n7ax/nvim-window-picker', { 'commit': 'v2.4.0' }
 
 " also plenary, which is installed below in telescope dependencies
 " END
@@ -55,7 +55,7 @@ Plug 'dag/vim-fish', { 'commit': '50b95cb' }
 
 Plug 'godlygeek/tabular', { 'commit': '12437cd' }
 
-Plug 'neovim/nvim-lspconfig', { 'commit': '9e932edb' }
+Plug 'neovim/nvim-lspconfig', { 'commit': 'fb733ac7' }
 
 Plug 'hashivim/vim-terraform', { 'commit': '24de93a' }
 
@@ -76,7 +76,7 @@ Plug 'hrsh7th/nvim-cmp', { 'commit': '5a11682' }
 
 Plug 'dyng/ctrlsf.vim', { 'commit': '32236a8' }
 
-Plug 'mbbill/undotree', { 'commit': '36ff7ab' }
+Plug 'mbbill/undotree', { 'commit': 'b951b87' }
 
 call plug#end()
 
