@@ -13,11 +13,11 @@ endif
 
 call plug#begin('~/.local/share/nvim/plugged')
 
-Plug 'nvim-neo-tree/neo-tree.nvim', { 'commit': 'dda4c9e' }
+Plug 'nvim-neo-tree/neo-tree.nvim', { 'commit': '84c75e7' }
 
 " BEGIN neo-tree dependencies
 "
-Plug 'MunifTanjim/nui.nvim', { 'commit': '61574ce' }
+Plug 'MunifTanjim/nui.nvim', { 'commit': 'de74099' }
 Plug 's1n7ax/nvim-window-picker', { 'commit': 'v2.4.0' }
 
 " also plenary, which is installed below in telescope dependencies
@@ -37,7 +37,7 @@ Plug 'ElmCast/elm-vim', { 'commit': '4b71fac' }
 
 Plug 'vmchale/dhall-vim', { 'commit': 'bd9fd99' }
 
-Plug 'sbdchd/neoformat', { 'commit': '719b79b' }
+Plug 'sbdchd/neoformat', { 'commit': '9d95e5c' }
 
 Plug 'jreybert/vimagit', { 'commit': 'fc7eda9' }
 
@@ -49,7 +49,7 @@ Plug 'gcmt/taboo.vim', { 'commit': '937f67a' }
 
 Plug 'nicwest/vim-http', { 'commit': '87ba1fa' }
 
-Plug 'liuchengxu/vim-which-key', { 'commit': '470cd19' }
+Plug 'liuchengxu/vim-which-key', { 'commit': '72a4267' }
 
 Plug 'dag/vim-fish', { 'commit': '50b95cb' }
 
@@ -64,7 +64,7 @@ Plug 'nvim-lua/popup.nvim', { 'commit': 'b7404d3' }
 Plug 'nvim-lua/plenary.nvim', { 'commit': '857c5ac' } " also a neo-tree-dependencies
 " END telescope dependencies
 
-Plug 'nvim-telescope/telescope.nvim', { 'commit': '5899106' }
+Plug 'nvim-telescope/telescope.nvim', { 'commit': '5255aa2' }
 
 Plug 'nvim-telescope/telescope-file-browser.nvim', { 'commit': '626998e' }
 
@@ -74,9 +74,9 @@ Plug 'hrsh7th/cmp-path', { 'commit': '91ff86c' }
 Plug 'hrsh7th/cmp-cmdline', { 'commit': '8ee981b' }
 Plug 'hrsh7th/nvim-cmp', { 'commit': '5a11682' }
 
-Plug 'dyng/ctrlsf.vim', { 'commit': '32236a8' }
+Plug 'dyng/ctrlsf.vim', { 'commit': '50186c5' }
 
-Plug 'mbbill/undotree', { 'commit': 'b951b87' }
+Plug 'mbbill/undotree', { 'commit': '6fa6b57' }
 
 call plug#end()
 
